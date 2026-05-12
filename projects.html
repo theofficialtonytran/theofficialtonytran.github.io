@@ -14,8 +14,9 @@
     <source src = "videos/COTAOptimization.mp4" type="video/mp4">
   </video>
   <p> 
-    Using public available data from COTA and local Ohio tract and census data, used a Maximal Coverage Location Problem (MCLP) 
-    model to determine optimal spots for future bus stops to be implemented based off of demand and availability.
+    Formulated a Maximum Coverage Location Problem (MCLP) using Python and Gurobi to optimize 
+    bus stop placement across Columbus, integrating U.S. Census and COTA transit data to help 
+    approximately 43,000 residents under infrastructure constraints
   </p>
 
   <p>
@@ -25,6 +26,31 @@
   </p>
   <img src="images/COTAResults.png">
   <br>
+  <p>
+    The table below summarizes each of the five chosen stops, including GEOID, geographic coordinates, and the population covered by each location. 
+    Across all five stops, the model adds 42,986 additional residents to the covered population. 
+    This represents a substantial increase relative to the baseline network and demonstrates that a small number of well-placed stops can greatly expand accessibility
+  </p>
+  <table border="2">
+    <tr>
+      <th> Selected Stop </th> <th> GEOID </th> <th> Latitude </th> <th> Longitude </th> <th> Population </th>
+    </tr>
+    <tr>
+      <td> 16 </td> <td> 39049009390 </td> <td> 39.974217 </td> <td> -82.790753 </td> <td> 7,768 </td>
+    </tr>
+    <tr>
+      <td> 40 </td> <td> 39049006241 </td> <td> 40.077974 </td> <td> -83.165966 </td> <td> 8,591 </td>
+    </tr>
+    <tr>
+      <td> 41 </td> <td> 39049007398 </td> <td> 40.013312 </td> <td> -82.780411 </td> <td> 9,389 </td>
+    </tr>
+    <tr>
+      <td> 82 </td> <td> 39049009755 </td> <td> 39.869836 </td> <td> -83.044463 </td> <td> 7,639 </td>
+    </tr>
+    <tr>
+      <td> 130 </td> <td> 39049007209 </td> <td> 40.068750 </td> <td> -82.852063 </td> <td> 9,599 </td>
+    </tr>
+  </table>
 
   <a href="group11_report.pdf">
   <button style= "font-size:10px; background-color:gray; color:black; border-radius: 5px"> <h2> <u> Full Report </u> </h2> </button>
