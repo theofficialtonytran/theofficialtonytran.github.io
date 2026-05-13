@@ -1,3 +1,132 @@
+/* === Layout === */
+body {
+    background-color: honeydew;
+    font-family: sans-serif, verdana, arial;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 20px 40px;
+    line-height: 1.7;
+}
+
+/* === Header === */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 4px;
+}
+
+/* === Section headings === */
+h2 {
+    text-align: left;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+}
+
+/* === Body text === */
+p {
+    margin-bottom: 1rem;
+}
+
+/* === Images === */
+.poster {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+img:not(.headshot):not(.poster) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem 0;
+    border-radius: 6px;
+}
+
+/* === Skills list === */
+ul {
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+ul li {
+    margin-bottom: 6px;
+}
+/* === Skills grid === */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 1.5rem 0;
+}
+
+.skill-card {
+    background-color: #f0f4f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px 18px;
+}
+
+.skill-card h4 {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #555;
+}
+
+.skill-card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+}
+
+.skill-card ul li {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+/* === Certification cards === */
+.cert-card {
+    background-color: #f0f4f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    max-width: 500px;
+}
+
+.cert-card p {
+    margin: 0;
+}
+
+.cert-detail {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+/* === Certification image === */
+.cert-img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 1rem 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 1rem 0;
+}
+
+/* === Header component (for future use) === */
 .header-content {
     display: flex;
     flex-direction: column;
@@ -5,7 +134,11 @@
     gap: 10px;
 }
 
-.headshot{
+header {
+    text-align: center;
+}
+
+.headshot {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -13,22 +146,16 @@
     object-position: center;
 }
 
-header{
-    text-align: center;
+/* === Buttons === */
+button {
+    background-color: aliceblue;
+    color: gray;
 }
 
-body{
-    background-color:honeydew;
-    font-family: sans-serif, verdana, arial;
-}
-
-button{
-    background-color:aliceblue;
-    color:gray;
-}
-footer{
+/* === Footer === */
+footer {
     text-align: center;
-}
-h2{
-    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #555;
 }
