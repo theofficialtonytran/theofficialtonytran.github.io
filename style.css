@@ -56,6 +56,7 @@ ul {
 ul li {
     margin-bottom: 6px;
 }
+
 /* === Skills grid === */
 .skills-grid {
     display: grid;
@@ -151,6 +152,7 @@ button {
     background-color: aliceblue;
     color: gray;
 }
+
 .image-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -160,8 +162,8 @@ button {
 
 .image-grid img {
   width: 100%;
-  height: 200px;        /* fixed height for uniformity */
-  object-fit: cover;    /* crops images to fit without stretching */
+  height: 200px;
+  object-fit: cover;
 }
 
 /* === Footer === */

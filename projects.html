@@ -1,76 +1,514 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Projects</title>
+  <title>Projects – Tony Tran</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Page intro ── */
+    .page-intro {
+      margin: 2.5rem 0 2rem;
+    }
+    .page-intro h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 400;
+      border: none;
+      margin: 0 0 0.35rem;
+      color: #1a2e1a;
+      letter-spacing: -0.01em;
+    }
+    .page-intro p {
+      font-family: 'DM Sans', sans-serif;
+      color: #5a6b5a;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    /* ── Project cards ── */
+    .project-card {
+      background: #fff;
+      border: 1px solid #d6e4d6;
+      border-radius: 14px;
+      padding: 2rem 2.2rem;
+      margin: 2rem 0;
+      box-shadow: 0 2px 12px rgba(60, 90, 60, 0.06);
+      transition: box-shadow 0.25s ease;
+    }
+    .project-card:hover {
+      box-shadow: 0 6px 28px rgba(60, 90, 60, 0.12);
+    }
+
+    /* ── Project header ── */
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .project-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #fff;
+      background: #3a6b3a;
+      border-radius: 6px;
+      padding: 3px 8px;
+      margin-top: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .project-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: #1a2e1a;
+      margin: 0;
+      line-height: 1.3;
+      border: none;
+      padding: 0;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: #3a6b3a;
+      background: #eef5ee;
+      border: 1px solid #c5dcc5;
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+
+    /* ── Body text inside cards ── */
+    .project-card p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.96rem;
+      color: #2c3e2c;
+      line-height: 1.75;
+      margin-bottom: 0.9rem;
+    }
+    .project-card ul {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.93rem;
+      color: #2c3e2c;
+      line-height: 1.7;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #3a6b3a;
+      margin: 1.6rem 0 0.5rem;
+    }
+
+    /* ── Math block ── */
+    .math-block {
+      background: #f4f9f4;
+      border-left: 3px solid #3a6b3a;
+      border-radius: 0 8px 8px 0;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0 1.2rem;
+      overflow-x: auto;
+      font-size: 0.93em;
+    }
+
+    /* ── Video ── */
+    .project-card video {
+      width: 100%;
+      border-radius: 10px;
+      margin: 0.5rem 0 1rem;
+      border: 1px solid #d6e4d6;
+    }
+
+    /* ── Results image ── */
+    .project-card img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 0.5rem 0 1rem;
+      border: 1px solid #d6e4d6;
+    }
+
+    /* ── Table ── */
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      margin: 0.8rem 0 1.2rem;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #d0e4d0;
+    }
+    .styled-table th {
+      background: #3a6b3a;
+      color: #fff;
+      font-weight: 500;
+      padding: 10px 14px;
+      text-align: left;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+    .styled-table td {
+      padding: 9px 14px;
+      color: #2c3e2c;
+      border-bottom: 1px solid #e6f0e6;
+    }
+    .styled-table tr:last-child td {
+      border-bottom: none;
+    }
+    .styled-table tr:nth-child(even) td {
+      background: #f4f9f4;
+    }
+    .styled-table tr:hover td {
+      background: #eaf3ea;
+    }
+
+    /* ── Report button ── */
+    .report-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 0.8rem;
+      padding: 9px 20px;
+      background: #3a6b3a;
+      color: #fff !important;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .report-btn:hover {
+      background: #2d5a2d;
+      transform: translateY(-1px);
+    }
+    .report-btn svg {
+      flex-shrink: 0;
+    }
+
+    /* ── Divider ── */
+    .card-divider {
+      height: 1px;
+      background: linear-gradient(to right, #d6e4d6, transparent);
+      margin: 1.4rem 0;
+    }
+
+    /* ── Confidential notice ── */
+    .notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #fff8e8;
+      border: 1px solid #e8d89a;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      color: #5a4a10;
+      margin: 0.5rem 0 1rem;
+    }
+
+    /* ── Top nav strip ── */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #d6e4d6;
+    }
+    .top-bar-name {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.5rem;
+      color: #1a2e1a;
+      margin: 0;
+      font-weight: 400;
+    }
+    .top-bar-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      color: #5a6b5a;
+      margin: 2px 0 0;
+    }
+    .top-bar-nav {
+      display: flex;
+      gap: 1.2rem;
+    }
+    .top-bar-nav a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      color: #3a6b3a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .top-bar-nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <h1>Tony Tran</h1>
-  <p>Recent graduate at The Ohio State University | Data Analyst / Scientist</p>
-  <hr>
-  <h4> COTA ideal bus stop optimization</h4> 
 
-  <video controls>
-    <source src = "videos/COTAOptimization.mp4" type="video/mp4">
-  </video>
-  <p> 
-    Formulated a Maximum Coverage Location Problem (MCLP) using Python and Gurobi to optimize 
-    bus stop placement across Columbus, integrating U.S. Census and COTA transit data to help 
-    approximately 43,000 residents under infrastructure constraints
-  </p>
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div>
+      <p class="top-bar-name">Tony Tran</p>
+      <p class="top-bar-sub">Recent Graduate, The Ohio State University · Data Analyst / Scientist</p>
+    </div>
+    <nav class="top-bar-nav">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="aboutme.html">About Me</a>
+      <a href="skills.html">Skills</a>
+      <a href="Tony Tran Resume - SP.26.pdf"> Resume</a>
+      <a href="contactme.html">Contact</a>
+    </nav>
+  </div>
 
-  <p>
-    Here is our full model, with a list of the variables, constraints, and objective function labeled:
-  </p>
-  <img src="images/COTAFormula.png">
+  <!-- Page intro -->
+  <div class="page-intro">
+    <h2>Projects</h2>
+    <p>Selected work in optimization, machine learning, and statistical modeling.</p>
+  </div>
 
-  <p>
-    Shown below are the results that my team derived. The Grey dots represent existing stops, blue dots represent potential new stops, 
-    and red dots represent the selected new (optimal) stops. 
-    These results show that our model fulfills its intended purpose and provides an efficient and data driven approach to expanding the COTA bus network. 
-  </p>
-  <img src="images/COTAResults.png">
-  <br>
-  <p>
-    The table below summarizes each of the five chosen stops, including GEOID, geographic coordinates, and the population covered by each location. 
-    Across all five stops, the model adds 42,986 additional residents to the covered population. 
-    This represents a substantial increase relative to the baseline network and demonstrates that a small number of well-placed stops can greatly expand accessibility.
-  </p>
-  <table border="2">
-    <tr>
-      <th> Selected Stop </th> <th> GEOID </th> <th> Latitude </th> <th> Longitude </th> <th> Population </th>
-    </tr>
-    <tr>
-      <td> 16 </td> <td> 39049009390 </td> <td> 39.974217 </td> <td> -82.790753 </td> <td> 7,768 </td>
-    </tr>
-    <tr>
-      <td> 40 </td> <td> 39049006241 </td> <td> 40.077974 </td> <td> -83.165966 </td> <td> 8,591 </td>
-    </tr>
-    <tr>
-      <td> 41 </td> <td> 39049007398 </td> <td> 40.013312 </td> <td> -82.780411 </td> <td> 9,389 </td>
-    </tr>
-    <tr>
-      <td> 82 </td> <td> 39049009755 </td> <td> 39.869836 </td> <td> -83.044463 </td> <td> 7,639 </td>
-    </tr>
-    <tr>
-      <td> 130 </td> <td> 39049007209 </td> <td> 40.068750 </td> <td> -82.852063 </td> <td> 9,599 </td>
-    </tr>
-  </table>
+  <!-- PROJECT 1 -->
+  <div class="project-card">
+    <div class="project-header">
+      <span class="project-number">01</span>
+      <h4 class="project-title">COTA Ideal Bus Stop Optimization</h4>
+    </div>
+    <div class="project-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Gurobi</span>
+      <span class="tag">MCLP</span>
+      <span class="tag">Census Data</span>
+      <span class="tag">Transit</span>
+    </div>
 
-  <p>
-    For a more in-depth explanation, feel free to look at our report!
-  </p>
-  <br>
-  
-  <a href="group11_report.pdf">
-  <button style= "font-size:10px; background-color:gray; color:black; border-radius: 5px"> <h2> <u> Full Report </u> </h2> </button>
-  </a>
-  <hr>
-  <h4> IGS Energy - Battery Optimization </h4>
-  <br>
-  <p>
-    
-  </p>
+    <p>
+      Formulated a Maximum Coverage Location Problem (MCLP) using Python and Gurobi to optimize
+      bus stop placement across Columbus, integrating U.S. Census and COTA transit data to help
+      approximately 43,000 residents under infrastructure constraints.
+    </p>
 
+    <video controls>
+      <source src="videos/COTAOptimization.mp4" type="video/mp4">
+    </video>
+
+    <div class="section-label">Optimization Model</div>
+    <p>Full model with variables, constraints, and objective function:</p>
+    <div class="math-block">
+      $$
+      \begin{aligned}
+      &\text{max } z = \sum_{i \in D} w_i y_i \\
+      &\text{subject to:} \\
+      &\quad y_i \leq \sum_{j \in C} a_{ij} x_j \quad \text{for all } i \in D \\
+      &\quad \sum_{j \in C} x_j = P \\
+      &\quad x_j \in \{0, 1\} \quad \text{for all } j \in C \\
+      &\quad y_i \in \{0, 1\} \quad \text{for all } i \in D \\
+      &\text{where:} \\
+      &\quad w_i = \text{weight at demand point } i \\
+      &\quad y_i = \text{binary variable indicating coverage of demand point } i \\
+      &\quad a_{ij} = \text{binary variable indicating if candidate } j \text{ covers demand } i \\
+      &\quad x_j = \text{binary variable indicating if a stop is built at candidate } j \\
+      &\quad P = \text{number of stops to be added (5 in our case)} \\
+      &\quad C = \text{set of candidate stop locations} \\
+      &\quad D = \text{set of demand points (census blocks)}
+      \end{aligned}
+      $$
+    </div>
+
+    <div class="card-divider"></div>
+
+    <div class="section-label">Results</div>
+    <p>
+      Grey dots represent existing stops, blue dots represent potential new stops,
+      and red dots represent the selected optimal stops. The model fulfills its intended purpose
+      and provides an efficient, data-driven approach to expanding the COTA bus network.
+    </p>
+    <img src="images/COTAResults.png" alt="COTA Optimization Results">
+
+    <p>
+      The table below summarizes each of the five chosen stops. Across all five,
+      the model adds <strong>42,986 additional residents</strong> to the covered population.
+    </p>
+
+    <table class="styled-table">
+      <tr>
+        <th>Selected Stop</th><th>GEOID</th><th>Latitude</th><th>Longitude</th><th>Population</th>
+      </tr>
+      <tr><td>16</td><td>39049009390</td><td>39.974217</td><td>−82.790753</td><td>7,768</td></tr>
+      <tr><td>40</td><td>39049006241</td><td>40.077974</td><td>−83.165966</td><td>8,591</td></tr>
+      <tr><td>41</td><td>39049007398</td><td>40.013312</td><td>−82.780411</td><td>9,389</td></tr>
+      <tr><td>82</td><td>39049009755</td><td>39.869836</td><td>−83.044463</td><td>7,639</td></tr>
+      <tr><td>130</td><td>39049007209</td><td>40.068750</td><td>−82.852063</td><td>9,599</td></tr>
+    </table>
+
+    <a href="group11_report.pdf" class="report-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Full Report
+    </a>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="project-card">
+    <div class="project-header">
+      <span class="project-number">02</span>
+      <h4 class="project-title">IGS Energy – Battery Optimization</h4>
+    </div>
+    <div class="project-tags">
+      <span class="tag">Time-Series Regression</span>
+      <span class="tag">Energy</span>
+      <span class="tag">Optimization</span>
+      <span class="tag">Cost Savings</span>
+    </div>
+
+    <p>
+      Developed a time-series regression model based on energy consumption data to optimize
+      battery usage efficiency under energy constraints, resulting in projected customer savings of
+      <strong>$1,700+ per year</strong>.
+    </p>
+    <p>
+      The strategy charges the battery during off-peak hours and discharges during peak hours,
+      letting the customer use stored energy when electricity is expensive and recharge when it's cheap.
+    </p>
+
+    <div class="section-label">Optimization Model</div>
+    <div class="math-block">
+      $$
+      \begin{aligned}
+      &\text{min } \sum_i [\alpha_i \cdot \beta_i + c_i - d_i], \quad i = 1, 2, \ldots, 24 \\
+      &\text{subject to:} \\
+      &\quad d_i + \text{grid}_i \leq 13.5 \text{ kW} \quad \forall i \\
+      &\quad c_i + d_i \leq 13.5 \text{ kW} \quad \forall i \\
+      &\quad c_i \leq 5 \text{ kW} \quad \forall i \\
+      &\quad d_i \leq 11.5 \text{ kW} \quad \forall i \\
+      &\text{where:} \\
+      &\quad \alpha_i = \text{price of electricity at time } i \\
+      &\quad \beta_i = \text{appliance electricity demand at time } i \\
+      &\quad c_i = \text{battery charge at time } i \\
+      &\quad d_i = \text{battery discharge at time } i \\
+      &\quad \text{grid}_i = \beta_i + c_i - d_i
+      \end{aligned}
+      $$
+    </div>
+
+    <div class="section-label">Assumptions</div>
+    <ul>
+      <li>The battery cannot be charged and discharged simultaneously.</li>
+      <li>No more than two batteries are fully charged and discharged.</li>
+      <li>The battery starts with zero stored energy (initial state = 0).</li>
+    </ul>
+
+    <div class="card-divider"></div>
+
+    <div class="notice">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Due to data confidentiality, detailed results cannot be shared publicly. The model achieved significant cost savings and produced a detailed battery optimization schedule.
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div class="project-card">
+    <div class="project-header">
+      <span class="project-number">03</span>
+      <h4 class="project-title">Stock Market Prediction – Bayesian Hierarchical Model</h4>
+    </div>
+    <div class="project-tags">
+      <span class="tag">Bayesian Inference</span>
+      <span class="tag">Hierarchical Model</span>
+      <span class="tag">R / Stan</span>
+      <span class="tag">Finance</span>
+    </div>
+
+    <p>
+      Built a predictive Bayesian hierarchical model to determine which companies and sectors
+      are likely to produce positive returns. Because companies within the same sector share
+      economic influences, the model borrows information across companies to produce more stable
+      probability estimates.
+    </p>
+
+    <div class="section-label">Model Specification</div>
+    <div class="math-block">
+      $$
+      \begin{aligned}
+      y_{scf} &\overset{ind}{\sim} p(y \mid \theta_{sc}) \\
+      \theta_{sc} &\overset{iid}{\sim} p(\theta \mid \mu_s, \tau_s^{-1}) \\
+      \text{logit}(\theta_{sc}) &= \log\!\left(\frac{\theta_{sc}}{1-\theta_{sc}}\right) = \eta_{sc} \\
+      \eta_{sc} \mid \mu_s, \tau_s &\sim N(\mu_s,\, \tau_s^{-1}) \\
+      \mu_s &\sim p(\mu_0 = 0,\, \sigma_0^2 = 20) \\
+      \tau_s &\sim p(\alpha_0 = 1,\, \beta_0 = 0.1) \\
+      s &= 1, 2, \ldots, 5 \quad
+      c = 1, 2, \ldots, 10 \quad
+      f = 1, 2, \ldots, 30
+      \end{aligned}
+      $$
+    </div>
+
+    <div class="section-label">Parameter Interpretations</div>
+    <ul>
+      <li>\(y_{scf}\): Observable response — 1 if company \(c\) in sector \(s\) had a positive return at observation \(f\), else 0.</li>
+      <li>\(\theta_{sc}\): Probability of a positive net return for company \(c\) in sector \(s\).</li>
+      <li>\(\eta_{sc}\): Log-odds of a positive return for company \(c\) in sector \(s\).</li>
+      <li>\(\mu_s\): Sector-level mean log-odds of a positive return.</li>
+      <li>\(\tau_s\): Precision of the log-odds within sector \(s\).</li>
+      <li>\(s\), \(c\), \(f\): Sector, company, and observation indices respectively.</li>
+    </ul>
+
+    <div class="card-divider"></div>
+
+    <div class="section-label">Key Findings</div>
+    <p>
+      Based on model output, <strong>sectors 1, 2, and 5</strong> are recommended for investment.
+      Company 10 in sector 2 and company 5 in sector 5 showed the highest estimated probabilities
+      of positive returns. Among investable sectors, sector 1 exhibited the highest precision,
+      indicating more consistent company performance and a potentially more stable investment choice.
+    </p>
+
+    <a href="FinalProject.pdf" class="report-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Full Report
+    </a>
+  </div>
+
+  <footer>
+    <hr>
+    Author: Tony Tran
+    <br>
+    &copy; copyright reserved
+    <br>
+    <a href="mailto:theofficialtonytran@gmail.com">
+      theofficialtonytran@gmail.com
+    </a>
+  </footer>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    });
+  </script>
 </body>
 </html>
