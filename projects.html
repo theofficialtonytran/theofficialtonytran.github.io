@@ -389,6 +389,17 @@
       letting the customer use stored energy when electricity is expensive and recharge when it's cheap.
     </p>
 
+    <div class="section-label"> Time-Series Formula </div>
+    <div class="math-block">
+      $$
+      \begin{aligned}
+      &\log(\text{Price}_t) = \beta_0 + \beta_1 log(\text{Price}_{t-1}) + 
+      \beta_2 log(\text{DayOfWeek}_{t-24}) + \beta_3 \text{Weekend}_t + \\
+      &\beta_4 \text{SevereWeather}_t + \beta_5 \text{MaxTemp}_t + 
+      \beta_6 \text{HeatPeak}_t + \beta_7 \text{HeatNonPeak}_t + \epsilon_t \\
+      \end{aligned}
+      $$
+
     <div class="section-label">Optimization Model</div>
     <div class="math-block">
       $$
@@ -454,16 +465,16 @@
       \eta_{sc} \mid \mu_s, \tau_s &\sim N(\mu_s,\, \tau_s^{-1}) \\
       \mu_s &\sim p(\mu_0 = 0,\, \sigma_0^2 = 20) \\
       \tau_s &\sim p(\alpha_0 = 1,\, \beta_0 = 0.1) \\
-      s &= 1, 2, \ldots, 5 \quad
-      c = 1, 2, \ldots, 10 \quad
-      f = 1, 2, \ldots, 30
+      s &= 1, 2, \ldots, 5 \quad \\
+      c &= 1, 2, \ldots, 10 \quad \\
+      f &= 1, 2, \ldots, 30 \\
       \end{aligned}
       $$
     </div>
 
     <div class="section-label">Parameter Interpretations</div>
     <ul>
-      <li>\(y_{scf}\): Observable response — 1 if company \(c\) in sector \(s\) had a positive return at observation \(f\), else 0.</li>
+      <li>\(y_{scf}\): Observable response - 1 if company \(c\) in sector \(s\) had a positive return at observation \(f\), else 0.</li>
       <li>\(\theta_{sc}\): Probability of a positive net return for company \(c\) in sector \(s\).</li>
       <li>\(\eta_{sc}\): Log-odds of a positive return for company \(c\) in sector \(s\).</li>
       <li>\(\mu_s\): Sector-level mean log-odds of a positive return.</li>
