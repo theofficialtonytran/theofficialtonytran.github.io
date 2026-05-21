@@ -399,10 +399,65 @@
     </div>
   </div>
 
-  <!-- PROJECT 2: COTA -->
+  <!-- PROJECT 2: A/B Test -->
+<div class="project-card" data-categories="data-analysis">
+  <div class="project-header">
+    <span class="project-number">02</span>
+    <h4 class="project-title">A/B Test Analysis: Landing Page Experiment</h4>
+  </div>
+  <div class="project-tags">
+    <span class="tag">Python</span>
+    <span class="tag">scipy</span>
+    <span class="tag">Chi-Square Test</span>
+    <span class="tag">Statistical Analysis</span>
+    <span class="tag">A/B Testing</span>
+  </div>
+
+  <p>
+    Statistical analysis of a controlled landing page experiment across 290,584 users
+    to determine whether a redesigned page produced a statistically significant
+    improvement in conversion rate. Includes full data cleaning, hypothesis testing,
+    effect size calculation, and a business memo with a ship/no-ship recommendation.
+  </p>
+
+  <div class="section-label">Key Results</div>
+
+  <table class="styled-table">
+    <tr>
+      <th>Group</th><th>Users</th><th>Conversions</th><th>Conversion Rate</th>
+    </tr>
+    <tr><td>Control (Old Page)</td><td>145,274</td><td>17,489</td><td>12.04%</td></tr>
+    <tr><td>Treatment (New Page)</td><td>145,310</td><td>17,264</td><td>11.88%</td></tr>
+  </table>
+
+  <p>
+    Chi-square test returned a p-value of <strong>0.19</strong>, which is well above the 0.05
+    significance threshold. Effect size (Cohen's h) of <strong>0.005</strong> confirmed
+    the difference was negligible. For the final recommendation:, we would recommend to not ship the new page.
+  </p>
+
+  <div class="card-divider"></div>
+
+  <div style="display:flex; gap: 10px; flex-wrap: wrap; margin-top: 0.8rem;">
+    <a href="https://github.com/theofficialtonytran/ab-test-landing-page-analysis"
+       target="_blank" class="report-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35
+                 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S
+                 18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07
+                 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44
+                 7A3.37 3.37 0 0 0 9 18.13V22"/>
+      </svg>
+      View Code
+    </a>
+  </div>
+</div>
+
+  <!-- PROJECT 3: COTA -->
   <div class="project-card" data-categories="optimization">
     <div class="project-header">
-      <span class="project-number">02</span>
+      <span class="project-number">03</span>
       <h4 class="project-title">COTA Ideal Bus Stop Optimization</h4>
     </div>
     <div class="project-tags">
@@ -478,11 +533,11 @@
     </a>
   </div>
 
-  <!-- PROJECT 3: IGS Energy -->
+  <!-- PROJECT 4: IGS Energy -->
   <div class="project-card" data-categories="optimization">
     <div class="project-header">
-      <span class="project-number">03</span>
-      <h4 class="project-title">IGS Energy – Battery Optimization</h4>
+      <span class="project-number">04</span>
+      <h4 class="project-title">IGS Energy - Battery Optimization</h4>
     </div>
     <div class="project-tags">
       <span class="tag">Time-Series Regression</span>
@@ -548,11 +603,11 @@
     </div>
   </div>
 
-  <!-- PROJECT 4: Stock Market -->
+  <!-- PROJECT 5: Stock Market -->
   <div class="project-card" data-categories="machine-learning">
     <div class="project-header">
-      <span class="project-number">04</span>
-      <h4 class="project-title">Stock Market Prediction – Bayesian Hierarchical Model</h4>
+      <span class="project-number">05</span>
+      <h4 class="project-title">Stock Market Prediction - Bayesian Hierarchical Model</h4>
     </div>
     <div class="project-tags">
       <span class="tag">Bayesian Inference</span>
