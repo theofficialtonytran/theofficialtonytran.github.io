@@ -1,219 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>About Me – Tony Tran</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me — Tony Tran</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ── Top bar ── */
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #d6e4d6;
-    }
-    .top-bar-name {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 1.5rem;
-      color: #1a2e1a;
-      margin: 0;
-      font-weight: 400;
-    }
-    .top-bar-sub {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.82rem;
-      color: #5a6b5a;
-      margin: 2px 0 0;
-    }
-    .top-bar-nav {
-      display: flex;
-      gap: 1.2rem;
-    }
-    .top-bar-nav a {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      color: #3a6b3a;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .top-bar-nav a:hover {
-      text-decoration: underline;
-    }
-
-    /* ── Page intro ── */
-    .page-intro {
-      margin: 2.5rem 0 2rem;
-    }
-    .page-intro h2 {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 2rem;
-      font-weight: 400;
-      border: none;
-      margin: 0 0 0.35rem;
-      color: #1a2e1a;
-      letter-spacing: -0.01em;
-    }
-    .page-intro p {
-      font-family: 'DM Sans', sans-serif;
-      color: #5a6b5a;
-      font-size: 0.95rem;
-      margin: 0;
-    }
-
-    /* ── Cards ── */
-    .about-card {
-      background: #fff;
-      border: 1px solid #d6e4d6;
-      border-radius: 14px;
-      padding: 2rem 2.2rem;
-      margin: 2rem 0;
-      box-shadow: 0 2px 12px rgba(60, 90, 60, 0.06);
-      transition: box-shadow 0.25s ease;
-    }
-    .about-card:hover {
-      box-shadow: 0 6px 28px rgba(60, 90, 60, 0.12);
-    }
-
-    /* ── Card header ── */
-    .card-header {
-      display: flex;
-      align-items: flex-start;
+    /* ── Two-col intro layout ── */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      margin-bottom: 1.2rem;
-    }
-    .card-icon {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: #fff;
-      background: #3a6b3a;
-      border-radius: 6px;
-      padding: 3px 8px;
-      margin-top: 4px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .card-title {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 1.35rem;
-      font-weight: 400;
-      color: #1a2e1a;
-      margin: 0;
-      line-height: 1.3;
-      border: none;
-      padding: 0;
-    }
-
-    /* ── Section label ── */
-    .section-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #3a6b3a;
-      margin: 1.6rem 0 0.5rem;
-    }
-
-    /* ── Body text ── */
-    .about-card p {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.96rem;
-      color: #2c3e2c;
-      line-height: 1.75;
-      margin-bottom: 0.9rem;
-    }
-    .about-card ul {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.93rem;
-      color: #2c3e2c;
-      line-height: 1.7;
-      padding-left: 1.25rem;
       margin-bottom: 1rem;
-    }
-    .about-card ul li {
-      margin-bottom: 6px;
-    }
-
-    /* ── Divider ── */
-    .card-divider {
-      height: 1px;
-      background: linear-gradient(to right, #d6e4d6, transparent);
-      margin: 1.4rem 0;
-    }
-
-    /* ── Images ── */
-    .about-card img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin: 0.8rem 0 1rem;
-      border: 1px solid #d6e4d6;
-      display: block;
-    }
-    .about-card img.poster {
-      width: 100%;
-      height: auto;
-    }
-
-    /* ── Skills grid ── */
-    .skills-grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-      margin: 1rem 0;
-    }
-    .skill-pill-group {
-      background: #f4f9f4;
-      border: 1px solid #d0e4d0;
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-    .skill-pill-group h5 {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #3a6b3a;
-      margin: 0 0 10px;
-    }
-    .pill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
-    .pill-list li {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
-      color: #2c3e2c;
-      background: #fff;
-      border: 1px solid #c5dcc5;
-      border-radius: 20px;
-      padding: 2px 10px;
-      margin: 0;
-    }
-
-    /* ── Photo grid ── */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      column-gap: 10px;
-      row-gap: 10px;
-      margin: 1rem 0;
-    }
-    .photo-grid img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 1px solid #d6e4d6;
-      margin: 0;
     }
 
     /* ── Seeking banner ── */
@@ -221,191 +22,298 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      background: #eef5ee;
-      border: 1px solid #c5dcc5;
-      border-radius: 10px;
+      background: var(--sage-light);
+      border: 1px solid var(--sage-border);
+      border-radius: var(--r-lg);
       padding: 14px 18px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem;
-      color: #1a2e1a;
-      margin-top: 0.5rem;
+      font-family: var(--sans);
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: var(--ink-2);
+      line-height: 1.65;
+      margin-top: 1.2rem;
     }
     .seeking-dot {
-      width: 10px;
-      height: 10px;
-      background: #3a6b3a;
+      width: 8px; height: 8px;
+      background: var(--sage);
       border-radius: 50%;
       flex-shrink: 0;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.3); }
+      animation: statusPulse 2.4s ease-in-out infinite;
     }
 
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      margin-top: 2.5rem;
-      padding-top: 1.2rem;
-      border-top: 1px solid #d6e4d6;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      color: #5a6b5a;
+    /* ── Photo grids ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 1rem;
     }
-    footer a {
-      color: #3a6b3a;
-      text-decoration: none;
+    .photo-grid img {
+      width: 100%; height: 210px;
+      object-fit: cover;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      display: block;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s;
     }
-    footer a:hover {
-      text-decoration: underline;
+    .photo-grid img:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ── Full-width feature image ── */
+    .feature-img {
+      width: 100%;
+      border-radius: var(--r-lg);
+      border: 1px solid var(--border);
+      display: block;
+      margin-top: 1rem;
+      object-fit: cover;
+    }
+
+    /* ── Skill mini-grid ── */
+    .skill-groups {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 0.8rem;
+    }
+    .skill-group {
+      background: var(--paper-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 14px 16px;
+    }
+    .skill-group-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* ── Research image ── */
+    .research-img {
+      width: 100%;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      display: block;
+      margin-top: 0.8rem;
+    }
+
+    @media (max-width: 700px) {
+      .intro-grid    { grid-template-columns: 1fr; }
+      .skill-groups  { grid-template-columns: 1fr; }
+      .photo-grid    { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top bar -->
-  <div class="top-bar">
-    <div>
-      <p class="top-bar-name">Tony Tran</p>
-      <p class="top-bar-sub">Recent Graduate, The Ohio State University · Data Analyst / Scientist</p>
-      <a href="https://github.com/theofficialtonytran" class="top-bar-sub"> Github </a>
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-brand" aria-label="Tony Tran home">
+      <span class="nav-brand-name">Tony Tran</span>
+      <span class="nav-brand-role">|| Aspiring Data Analyst / Scientist</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="aboutme.html" class="active">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://github.com/theofficialtonytran" class="nav-gh" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="contactme.html" class="nav-btn">Get in touch</a>
     </div>
-    <nav class="top-bar-nav">
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="wrap">
+  <div class="page-header">
+    <span class="page-kicker">Background</span>
+    <h1 class="page-title">Data analyst, researcher,<br><em>lion dancer.</em></h1>
+    <p class="page-desc">A little bit of everything — grounded in data, driven by community.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ── WHO I AM ── -->
+  <div class="section">
+    <div class="section-header reveal">
+      <div>
+        <span class="section-kicker">Intro</span>
+        <h2 class="section-title">Who I am</h2>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="card reveal">
+        <div class="card-body">
+          <span class="label-sage">About</span>
+          <p class="card-text">
+            I'm a recent graduate from The Ohio State University with a degree in Data Analytics and a specialization in Computational Analytics. I'm drawn to problems where messy, real-world data can be shaped into something that actually changes a decision.
+          </p>
+          <p class="card-text" style="margin-top:0.8rem;">
+            My work spans optimization modeling, Bayesian statistics, energy analytics, and business intelligence — always with an eye toward communication. A model nobody can interpret doesn't move the needle.
+          </p>
+          <div class="seeking-banner">
+            <span class="seeking-dot" aria-hidden="true"></span>
+            Currently seeking full-time and internship opportunities in data analytics and data science.
+          </div>
+        </div>
+      </div>
+
+      <div class="card reveal reveal-d1">
+        <div class="card-body">
+          <span class="label-sage">Toolkit snapshot</span>
+          <div class="skill-groups">
+            <div class="skill-group">
+              <span class="skill-group-label">Languages</span>
+              <div class="chip-row">
+                <span class="chip on">Python</span>
+                <span class="chip on">R</span>
+                <span class="chip on">SQL</span>
+                <span class="chip">Java</span>
+                <span class="chip">C</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="skill-group-label">Libraries</span>
+              <div class="chip-row">
+                <span class="chip">pandas</span>
+                <span class="chip">NumPy</span>
+                <span class="chip">scikit-learn</span>
+                <span class="chip">matplotlib</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="skill-group-label">Visualization</span>
+              <div class="chip-row">
+                <span class="chip on">Tableau</span>
+                <span class="chip">Excel</span>
+                <span class="chip">Power BI</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="skill-group-label">Tools</span>
+              <div class="chip-row">
+                <span class="chip on">Gurobi</span>
+                <span class="chip">Git</span>
+                <span class="chip">LaTeX</span>
+                <span class="chip">DBeaver</span>
+              </div>
+            </div>
+          </div>
+          <a href="skills.html" class="btn btn-ghost btn-sm" style="margin-top:1.2rem; display:inline-flex;">
+            Full skills page
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXPERIENCE & RESEARCH ── -->
+  <div class="section">
+    <div class="section-header reveal">
+      <div>
+        <span class="section-kicker">Experience</span>
+        <h2 class="section-title">Background &amp; research</h2>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:1rem;">
+      <div class="card-body">
+        <span class="card-tag">Community & Leadership</span>
+        <h3 class="card-title">UVSA Midwest — Analytics &amp; Web</h3>
+        <p class="card-text">
+          Volunteered with the Union of Vietnamese Student Associations across the Midwest, supporting analytics initiatives and collaborating on data-driven projects and web development efforts. Led data reporting for regional programming, helping the organization understand engagement trends and resource allocation.
+        </p>
+        <img src="images/UVSAMW-ANX.png" alt="UVSA Midwest analytics work" style="width:100%; border-radius:var(--r-md); border:1px solid var(--border); margin-top:1rem; display:block;">
+      </div>
+    </div>
+
+    <div class="card reveal reveal-d1">
+      <div class="card-body">
+        <span class="card-tag">Academic Research</span>
+        <h3 class="card-title">Undergraduate Research — Diffusion &amp; Random Walks</h3>
+        <p class="card-text">
+          Participated in undergraduate research focused on modeling diffusion through random walks and reaction-diffusion systems. This experience sharpened my intuition for probability, stochastic processes, and computational simulation — skills that directly inform my approach to Bayesian modeling.
+        </p>
+        <img src="images/ResearchPoster.png" alt="Undergraduate research poster" class="research-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OUTSIDE WORK ── -->
+  <div class="section">
+    <div class="section-header reveal">
+      <div>
+        <span class="section-kicker">Life outside data</span>
+        <h2 class="section-title">Outside of work</h2>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:1rem;">
+      <div class="card-body">
+        <span class="card-tag">Community · Performance</span>
+        <h3 class="card-title">Lion Dancing</h3>
+        <p class="card-text">
+          I'm a Lion Dancer and coach. Our team performs every Chinese New Year for Ohio State's APIDA culture show as well as for Linh Son Pagoda. It's physically demanding — and the bond it creates with teammates and community makes it one of the most meaningful things I do outside of work.
+        </p>
+        <img src="images/LionDance.jpg" alt="2025–2026 Lion Dance Team" class="feature-img">
+      </div>
+    </div>
+
+    <div class="card reveal reveal-d1">
+      <div class="card-body">
+        <span class="card-tag">Personal</span>
+        <h3 class="card-title">Hobbies</h3>
+        <p class="card-text">Besides that, I enjoy exercising, traveling, bowling, and spending time with friends.</p>
+        <div class="photo-grid" style="margin-top:1rem;">
+          <img src="images/Physique.jpg" alt="Exercising">
+          <img src="images/Traveling.jpg" alt="Traveling">
+          <img src="images/Bowling.jpg" alt="Bowling">
+          <img src="images/Friends.jpg" alt="Friends">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.wrap -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-left">
+      <span class="footer-name">Tony Tran</span>
+      <span class="footer-copy">© 2026 · Columbus, OH</span>
+    </div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="mailto:theofficialtonytran@gmail.com">Email</a>
+      <a href="https://github.com/theofficialtonytran" target="_blank" rel="noopener">GitHub</a>
+      <a href="Tony Tran Resume - SP.26.pdf" target="_blank" rel="noopener">Resume</a>
       <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="aboutme.html">About Me</a>
-      <a href="skills.html">Skills</a>
-      <a href="Tony Tran Resume - SP.26.pdf">Resume</a>
       <a href="contactme.html">Contact</a>
     </nav>
   </div>
+</footer>
 
-  <!-- Page intro -->
-  <div class="page-intro">
-    <h2>About Me</h2>
-    <p>Data analyst, researcher, lion dancer - a little bit of everything.</p>
-  </div>
-
-  <!-- ── INTRO CARD ── -->
-  <div class="about-card">
-    <div class="card-header">
-      <span class="card-icon">Intro</span>
-      <h4 class="card-title">Who I Am</h4>
-    </div>
-    <p>
-      I'm a recent graduate from The Ohio State University with a background in Data Analytics
-      and a specialization in Computational Analytics. I'm interested in using analytics,
-      visualization, and machine learning to solve real-world problems and support data-driven
-      decision making.
-    </p>
-    <div class="seeking-banner">
-      <span class="seeking-dot"></span>
-      Currently seeking opportunities in data analytics and data science where I can continue
-      developing technical skills while contributing to impactful projects.
-    </div>
-  </div>
-
-  <!-- ── BACKGROUND CARD ── -->
-  <div class="about-card">
-    <div class="card-header">
-      <span class="card-icon">Background</span>
-      <h4 class="card-title">Experience &amp; Research</h4>
-    </div>
-
-    <p>
-      Throughout my academic and extracurricular experience, I've worked on projects involving
-      predictive analysis, data visualization, artificial intelligence, and statistical modeling.
-      I volunteered with the Union of Vietnamese Student Associations across the Midwest, where
-      I supported analytics initiatives and collaborated on data-driven projects and web
-      development efforts.
-    </p>
-    <img src="images/UVSAMW-ANX.png" alt="UVSA Midwest">
-
-    <div class="card-divider"></div>
-
-    <div class="section-label">Undergraduate Research</div>
-    <p>
-      I participated in undergraduate research focused on modeling diffusion through random walks
-      and reaction-diffusion systems. This experience strengthened my understanding of
-      probability, modeling, and computational problem-solving.
-    </p>
-    <img src="images/ResearchPoster.png" class="poster" alt="Research Poster">
-  </div>
-
-  <!-- ── SKILLS CARD ── -->
-  <div class="about-card">
-    <div class="card-header">
-      <span class="card-icon">Skills</span>
-      <h4 class="card-title">Technical Skills</h4>
-    </div>
-
-    <div class="skills-grid-2">
-      <div class="skill-pill-group">
-        <h5>Languages</h5>
-        <ul class="pill-list">
-          <li>Python</li><li>R</li><li>SQL</li><li>Java</li><li>C</li>
-        </ul>
-      </div>
-      <div class="skill-pill-group">
-        <h5>Libraries</h5>
-        <ul class="pill-list">
-          <li>pandas</li><li>NumPy</li><li>scikit-learn</li><li>matplotlib</li>
-        </ul>
-      </div>
-      <div class="skill-pill-group">
-        <h5>Visualization</h5>
-        <ul class="pill-list">
-          <li>Tableau</li><li>Microsoft Excel</li>
-        </ul>
-      </div>
-      <div class="skill-pill-group">
-        <h5>Tools &amp; Tech</h5>
-        <ul class="pill-list">
-          <li>HTML/CSS</li><li>Git/GitHub</li><li>LaTeX</li><li>Gurobi</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── OUTSIDE WORK CARD ── -->
-  <div class="about-card">
-    <div class="card-header">
-      <span class="card-icon">Life</span>
-      <h4 class="card-title">Outside of Work</h4>
-    </div>
-
-    <div class="section-label">Lion Dancing</div>
-    <p>
-      I'm a Lion Dancer and Coach. Our team performs every Chinese New Year for Ohio State's
-      APIDA culture show as well as for Linh Son Pagoda. Although it can be very physically
-      demanding, the bond I've formed with my community and teammates has only deepened my
-      love for it.
-    </p>
-    <img src="images/LionDance.jpg" alt="2025-2026 Lion Dance Team">
-
-    <div class="card-divider"></div>
-
-    <div class="section-label">Hobbies</div>
-    <p>Besides that, I also enjoy exercising, traveling, bowling, and hanging out with friends!</p>
-    <div class="photo-grid">
-      <img src="images/Physique.jpg" alt="Exercising">
-      <img src="images/Traveling.jpg" alt="Traveling">
-      <img src="images/Bowling.jpg" alt="Bowling">
-      <img src="images/Friends.jpg" alt="Friends">
-    </div>
-  </div>
-
-  <footer>
-    <hr>
-    Author: Tony Tran
-    <br>
-    &copy; copyright reserved
-    <br>
-    <a href="mailto:theofficialtonytran@gmail.com">
-      theofficialtonytran@gmail.com
-    </a>
-  </footer>
-
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
 </body>
 </html>
