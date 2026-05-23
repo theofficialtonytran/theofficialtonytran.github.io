@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects — Tony Tran</title>
+  <title>Projects - Tony Tran</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
     .filter-btn:hover { border-color: var(--sage-border); color: var(--sage); background: var(--sage-light); }
     .filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-    /* ── Project card specifics ── */
+    /* ── Project card ── */
     .project-card {
       margin-bottom: 1.2rem;
       transition: opacity 0.25s, transform 0.25s var(--ease), border-color 0.25s, box-shadow 0.25s;
@@ -129,6 +129,77 @@
     }
     .project-card video { width: 100%; }
 
+    /* ── Screenshot placeholder ── */
+    .screenshot-placeholder {
+      width: 100%;
+      background: var(--paper-2);
+      border: 1px dashed var(--border-2);
+      border-radius: var(--r-md);
+      padding: 2.8rem 2rem;
+      margin: 0.6rem 0 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .screenshot-placeholder-icon {
+      width: 44px; height: 44px;
+      background: var(--paper-3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink-4);
+      flex-shrink: 0;
+    }
+    .screenshot-placeholder-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-4);
+      letter-spacing: 0.05em;
+    }
+    .screenshot-placeholder-hint {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--ink-4);
+      letter-spacing: 0.04em;
+      opacity: 0.7;
+    }
+
+    /* ── Project footer (GitHub + other links) ── */
+    .project-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border);
+    }
+    .github-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--ink-2);
+      background: var(--paper-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--r-sm);
+      padding: 7px 14px;
+      text-decoration: none;
+      transition: all 0.18s var(--ease);
+    }
+    .github-btn:hover {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+      transform: translateY(-1px);
+    }
+
     /* ── No results ── */
     #no-results {
       display: none;
@@ -143,6 +214,7 @@
 
     @media (max-width: 600px) {
       .project-header { flex-direction: column; gap: 0.4rem; }
+      .project-footer { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -175,7 +247,7 @@
   <div class="page-header">
     <span class="page-kicker">Portfolio</span>
     <h1 class="page-title">Selected <em>projects</em></h1>
-    <p class="page-desc">Optimization models, Bayesian forecasts, energy analytics, and business intelligence — built with real data, for real decisions.</p>
+    <p class="page-desc">Optimization models, Bayesian forecasts, energy analytics, and business intelligence. Built with real data, for real decisions.</p>
   </div>
 </div>
 
@@ -188,11 +260,13 @@
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="optimization">Optimization</button>
       <button class="filter-btn" data-filter="machine-learning">Machine Learning</button>
-      <button class="filter-btn" data-filter="visualization">Visualization</button>
+      <button class="filter-btn" data-filter="visualization">Data Analysis</button>
       <button class="filter-btn" data-filter="bayesian">Bayesian</button>
     </div>
 
-    <!-- PROJECT 1: Superstore -->
+    <!-- ══════════════════════════════════════
+         PROJECT 1: Superstore
+    ══════════════════════════════════════ -->
     <div class="card project-card reveal" data-categories="visualization" id="superstore">
       <div class="card-body">
         <div class="project-header">
@@ -200,80 +274,130 @@
             <div class="card-eyebrow">01 · Business Intelligence</div>
             <h2 class="card-title-lg">Superstore Sales Performance</h2>
           </div>
-          <span class="project-num-tag">visualization</span>
+          <span class="project-num-tag">data analysis</span>
         </div>
         <div class="pill-row" style="margin-bottom:1.2rem;">
           <span class="pill">SQL</span><span class="pill">Tableau</span><span class="pill">EDA</span><span class="pill">Retail Analytics</span>
         </div>
 
-        <p class="card-text">
-          Conducted an end-to-end analysis of <strong>four years of retail sales data</strong> for a fictional office supply company, surfacing regional performance gaps, product-level profitability drivers, and seasonal trends.
-        </p>
-
         <span class="label">Overview</span>
         <p class="card-text">
-          The dataset contained order-level transactional records across three product categories — Furniture, Office Supplies, and Technology — spanning multiple US regions. The goal was to move from raw data to a clear strategic recommendation about where the business should invest and where it should cut.
+          End-to-end data analysis project examining 4 years of retail sales data (9,994 transactions)
+          for a fictional office supply company. Wrote 7 business-driven SQL queries in DuckDB to surface
+          margin erosion across product categories, then built a published Tableau Public dashboard with
+          KPI cards, a regional map, and interactive filters.
         </p>
 
         <div class="card-divider"></div>
 
         <span class="label">Key Findings</span>
         <ul style="font-family:var(--sans); font-size:0.86rem; color:var(--ink-2); line-height:1.75; padding-left:1.2rem; margin-top:0.4rem;">
-          <li>The <strong>West region</strong> drove the highest revenue but the <strong>Central region</strong> consistently underperformed on margin.</li>
-          <li><strong>Technology</strong> was the highest-margin category; <strong>Furniture</strong> (particularly Tables) operated at a loss after discounts.</li>
-          <li>Heavy discounting in the Central region correlated directly with negative profit — reducing discounts by 10% would recover an estimated $18k annually.</li>
+          <li>The <strong>West region</strong> drove the highest revenue, while the <strong>Central region</strong> consistently underperformed on margin.</li>
+          <li><strong>Technology</strong> was the highest-margin category.</li>
+          <li><strong>Furniture</strong> (particularly Tables) operated at a loss after discounts.</li>
+          <li>Heavy discounting in the Central region correlated directly with negative profit; reducing discounts by 10% would recover an estimated $18k annually.</li>
           <li>Q4 accounted for ~35% of annual revenue, suggesting strong seasonal concentration risk.</li>
         </ul>
+
+        <table class="styled-table">
+          <tr>
+            <th>Sub-Category</th><th>Total Sales</th><th>Total Profit</th><th>Margin %</th><th>Avg Discount</th>
+          </tr>
+          <tr><td>Tables</td><td>$206,966</td><td>-$17,725</td><td>-8.56%</td><td>26.13%</td></tr>
+          <tr><td>Bookcases</td><td>$114,880</td><td>-$3,473</td><td>-3.02%</td><td>21.11%</td></tr>
+          <tr><td>Supplies</td><td>$46,674</td><td>-$1,189</td><td>-2.55%</td><td>7.68%</td></tr>
+          <tr><td>Paper</td><td>$78,479</td><td>$34,054</td><td>43.39%</td><td>7.49%</td></tr>
+          <tr><td>Labels</td><td>$12,486</td><td>$5,546</td><td>44.42%</td><td>6.87%</td></tr>
+        </table>
 
         <div class="card-divider"></div>
 
         <span class="label">Methodology</span>
         <p class="card-text">
-          Data was cleaned and aggregated in SQL (DuckDB), then visualized in Tableau. Profit margin was decomposed by region × category × sub-category to isolate loss drivers. A discount sensitivity analysis was run to quantify margin impact.
+          Data was cleaned and aggregated in SQL (DuckDB), then visualized in Tableau. Profit margin was decomposed by <u>month</u>, <u>region</u>, <u>category</u>, and <u>sub-category</u> to isolate loss drivers. A discount sensitivity analysis was run to quantify margin impact.
         </p>
-        <video controls aria-label="Superstore Tableau dashboard walkthrough">
-          <source src="images/SuperstoreDashboard.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+
+        <span class="label">Dashboard</span>
+        <img src="images/Superstore_Sales_Performance _2014-2017.png" alt="Screenshot of Superstore Sales Performance Tableau dashboard">
+        <script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script>
+
+        <!-- Project footer -->
+        <div class="project-footer">
+          <a href="https://github.com/theofficialtonytran/superstore-sales-analysis" target="_blank" rel="noopener" class="github-btn" aria-label="View Superstore project on GitHub">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+          <a href="https://public.tableau.com/views/SuperstoreSalesPerformance_17791501716000/SuperstoreSalesPerformance2014-2017?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" class="btn btn-dark btn-sm" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            View Full Interactive Dashboard
+          </a>
+        </div>
+
       </div>
     </div>
 
-    <!-- PROJECT 2: AI Chatbot -->
+    <!-- ══════════════════════════════════════
+         PROJECT 2: Page Experiment
+    ══════════════════════════════════════ -->
     <div class="card project-card reveal" data-categories="machine-learning" id="chatbot">
       <div class="card-body">
         <div class="project-header">
           <div>
-            <div class="card-eyebrow">02 · Machine Learning</div>
-            <h2 class="card-title-lg">AI Chatbot — Customer Support</h2>
+            <div class="card-eyebrow">02 · Data Analysis</div>
+            <h2 class="card-title-lg">A/B Test Analysis: Landing Page Experiment</h2>
           </div>
-          <span class="project-num-tag">machine-learning</span>
+          <span class="project-num-tag">data-analysis</span>
         </div>
         <div class="pill-row" style="margin-bottom:1.2rem;">
-          <span class="pill">Python</span><span class="pill">NLP</span><span class="pill">Classification</span><span class="pill">Deep Learning</span>
+          <span class="pill">Python</span><span class="pill">Statistics</span><span class="pill">Hypothesis Testing</span><span class="pill">Experimentation</span>
         </div>
 
+        <span class="label">Overview</span>
         <p class="card-text">
-          Designed and trained a customer support chatbot capable of classifying incoming queries, routing them to the correct department, and generating templated responses — reducing simulated first-response time by over 60%.
-        </p>
-
-        <span class="label">Approach</span>
-        <p class="card-text">
-          Used a fine-tuned text classification pipeline to map customer messages to intent categories. Combined rule-based routing with a generative response layer for handling ambiguous inputs. Evaluated on held-out test data with F1-score as the primary metric.
+          Statistical analysis of a controlled landing page experiment across 290,584 users
+          to determine whether a redesigned page produced a statistically significant
+          improvement in conversion rate. Includes full data cleaning, hypothesis testing,
+          effect size calculation, and a business memo with a ship/no-ship recommendation.
         </p>
 
         <div class="card-divider"></div>
+          <span class="label">Methodology</span>
+        <p class="card-text">
+          After cleaning and validating the dataset, we performed a chi-square test of independence to compare conversion rates between the control and treatment groups. 
+          We also calculated Cohen's h to measure the effect size of the observed difference in conversion rates.
+        </p>
 
+        <div class="card-divider"></div>
         <span class="label">Results</span>
-        <ul style="font-family:var(--sans); font-size:0.86rem; color:var(--ink-2); line-height:1.75; padding-left:1.2rem; margin-top:0.4rem;">
-          <li>Classification accuracy: <strong>87%</strong> on held-out test set.</li>
-          <li>Correct department routing: <strong>91%</strong> of queries.</li>
-          <li>Simulated average response time reduced from ~4 hours to under 90 seconds.</li>
-        </ul>
-        <img src="images/chatbotResults.png" alt="AI Chatbot classification results">
+          <table class="styled-table">
+          <tr>
+            <th>Group</th><th>Users</th><th>Conversions</th><th>Conversion Rate</th>
+          </tr>
+            <tr><td>Control (Old Page)</td><td>145,274</td><td>17,489</td><td>12.04%</td></tr>
+            <tr><td>Treatment (New Page)</td><td>145,310</td><td>17,264</td><td>11.88%</td></tr>
+          </table>
+          <p class="card-text">
+            Chi-square test returned a p-value of <strong>0.19</strong>, which is well above the 0.05
+            significance threshold. Effect size (Cohen's h) of <strong>0.005</strong> confirmed
+            the difference was negligible. For the final recommendation, we would recommend to not ship the new page.
+          </p>
+        <span class="label">Bar Chart</span>
+        <img src="images/ab_test_results.png" alt="A/B Test Results visualization showing conversion rates for control and treatment groups">
+
+        <!-- Project footer -->
+        <div class="project-footer">
+          <a href="https://github.com/theofficialtonytran/AB-test-landing-page-analysis" target="_blank" rel="noopener" class="github-btn" aria-label="View A/B Test project on GitHub">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+        </div>
+
       </div>
     </div>
 
-    <!-- PROJECT 3: COTA -->
+    <!-- ══════════════════════════════════════
+         PROJECT 3: COTA
+    ══════════════════════════════════════ -->
     <div class="card project-card reveal" data-categories="optimization" id="cota">
       <div class="card-body">
         <div class="project-header">
@@ -284,17 +408,21 @@
           <span class="project-num-tag">optimization</span>
         </div>
         <div class="pill-row" style="margin-bottom:1.2rem;">
-          <span class="pill">Python</span><span class="pill">Gurobi</span><span class="pill">MCLP</span><span class="pill">GIS</span><span class="pill">Network Analysis</span>
+          <span class="pill">Python</span><span class="pill">Gurobi</span><span class="pill">MCLP</span><span class="pill">Census Data</span><span class="pill">Network Analysis</span>
         </div>
 
+        <span class="label">Overview</span>
         <p class="card-text">
-          Applied the <strong>Maximal Covering Location Problem (MCLP)</strong> to identify 5 optimal new bus stop locations across Columbus, Ohio — maximizing the number of residents brought within walking distance of the COTA network under a fixed infrastructure budget.
+          Formulated a Maximum Coverage Location Problem (MCLP) using Python and Gurobi to optimize
+          bus stop placement across Columbus, integrating U.S. Census and COTA transit data to help
+          approximately 43,000 residents under infrastructure constraints.
         </p>
 
-        <span class="label">Formulation</span>
-        <p class="card-text">
-          The MCLP selects P facility locations from a candidate set C to maximize the total demand covered within a service radius S. A demand point is "covered" if at least one selected facility falls within distance S of it.
-        </p>
+        <video controls>
+          <source src="videos/COTAOptimization.mp4" type="video/mp4">
+        </video>
+        <div class="label">Optimization Model</div>
+        <p class="card-text">Full model with variables, constraints, and objective function:</p>
         <div class="math-block">
           $$
           \begin{aligned}
@@ -333,20 +461,30 @@
           <tr><td>130</td><td>39049007209</td><td>40.068750</td><td>-82.852063</td><td>9,599</td></tr>
         </table>
 
-        <a href="group11_report.pdf" class="btn btn-dark btn-sm" target="_blank" rel="noopener">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Full Report
-        </a>
+        <!-- Project footer -->
+        <div class="project-footer">
+          <a href="https://github.com/coblentzkathryn/ISE-3230-COTA-Project" target="_blank" rel="noopener" class="github-btn" aria-label="View COTA project on GitHub">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+          <a href="group11_report.pdf" class="btn btn-dark btn-sm" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Full Report
+          </a>
+        </div>
+
       </div>
     </div>
 
-    <!-- PROJECT 4: IGS Energy -->
+    <!-- ══════════════════════════════════════
+         PROJECT 4: IGS Energy
+    ══════════════════════════════════════ -->
     <div class="card project-card reveal" data-categories="optimization" id="energy">
       <div class="card-body">
         <div class="project-header">
           <div>
             <div class="card-eyebrow">04 · Energy Analytics</div>
-            <h2 class="card-title-lg">IGS Energy — Battery Optimization</h2>
+            <h2 class="card-title-lg">IGS Energy - Battery Optimization</h2>
           </div>
           <span class="project-num-tag">optimization</span>
         </div>
@@ -355,7 +493,7 @@
         </div>
 
         <p class="card-text">
-          Developed a time-series regression model on energy consumption data to optimize residential battery dispatch — projecting <strong>$1,700+ in annual customer savings</strong> by charging during off-peak hours and discharging during peak pricing windows.
+          Developed a time-series regression model on energy consumption data to optimize residential battery dispatch - projecting <strong>$1,700+ in annual customer savings</strong> by charging during off-peak hours and discharging during peak pricing windows.
         </p>
 
         <span class="label">Time-Series Price Model</span>
@@ -370,14 +508,22 @@
           $$
         </div>
 
-        <span class="label">Dispatch Optimization</span>
+        <span class="label">Optimization Model</span>
         <div class="math-block">
           $$
           \begin{aligned}
-          &\text{min } \sum_i [\alpha_i \cdot \beta_i + c_i - d_i], \quad i = 1, \ldots, 24 \\
-          &\text{s.t. } d_i + \text{grid}_i \leq 13.5\text{ kW}, \quad
-          c_i + d_i \leq 13.5\text{ kW}, \quad
-          c_i \leq 5\text{ kW}, \quad d_i \leq 11.5\text{ kW}
+          &\text{min } \sum_i [\alpha_i \cdot \beta_i + c_i - d_i], i = 1, \ldots, 24 \\
+          &\text{such that } \\
+          &\quad d_i + \text{grid}_i \leq 13.5\text{ kW},  \\
+          &\quad c_i + d_i \leq 13.5\text{ kW},  \\
+          &\quad c_i \leq 5\text{ kW}, \\ 
+          &\quad d_i \leq 11.5\text{ kW} \\
+          &\text{where:} \\
+          &\quad \alpha_i = \text{price of electricity at time } i \\
+          &\quad \beta_i = \text{appliance electricity demand at time } i \\
+          &\quad c_i = \text{battery charge at time } i \\
+          &\quad d_i = \text{battery discharge at time } i \\
+          &\quad \text{grid}_i = \beta_i + c_i - d_i
           \end{aligned}
           $$
         </div>
@@ -393,25 +539,28 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Due to data confidentiality, detailed results cannot be shared publicly. The model produced a full 24-hour dispatch schedule and achieved significant verified cost savings.
         </div>
+
       </div>
     </div>
 
-    <!-- PROJECT 5: Stock Market -->
+    <!-- ══════════════════════════════════════
+         PROJECT 5: Stock Market
+    ══════════════════════════════════════ -->
     <div class="card project-card reveal" data-categories="bayesian machine-learning" id="stock">
       <div class="card-body">
         <div class="project-header">
           <div>
             <div class="card-eyebrow">05 · Probabilistic Modeling</div>
-            <h2 class="card-title-lg">Stock Market Prediction — Bayesian Hierarchical Model</h2>
+            <h2 class="card-title-lg">Stock Market Prediction - Bayesian Hierarchical Model</h2>
           </div>
           <span class="project-num-tag">bayesian</span>
         </div>
         <div class="pill-row" style="margin-bottom:1.2rem;">
-          <span class="pill">R</span><span class="pill">Stan</span><span class="pill">Bayesian Inference</span><span class="pill">Hierarchical Model</span><span class="pill">Finance</span>
+          <span class="pill">R</span><span class="pill">MCMC</span><span class="pill">Bayesian Inference</span><span class="pill">Hierarchical Model</span><span class="pill">Finance</span>
         </div>
-
+        <span class="label">Overview</span>
         <p class="card-text">
-          Built a Bayesian hierarchical model to estimate company- and sector-level probabilities of positive stock returns. Because companies within a sector share economic influences, the model uses <strong>partial pooling</strong> to borrow information across companies — producing more stable, uncertainty-aware estimates than independent models.
+          Built a Bayesian hierarchical model to estimate company- and sector-level probabilities of positive stock returns. Because companies within a sector share economic influences, the model uses <strong>partial pooling</strong> to borrow information across companies - producing more stable, uncertainty-aware estimates than independent models.
         </p>
 
         <span class="label">Model Specification</span>
@@ -419,32 +568,58 @@
           $$
           \begin{aligned}
           y_{scf} &\overset{ind}{\sim} \text{Bernoulli}(\theta_{sc}) \\
-          \text{logit}(\theta_{sc}) = \eta_{sc} &\mid \mu_s, \tau_s \sim N(\mu_s,\, \tau_s^{-1}) \\
-          \mu_s &\sim N(0,\, 20) \\
-          \tau_s &\sim \text{Gamma}(1,\, 0.1)
+          \theta_{scf} &\overset{iid}{\sim} p(\theta | \mu_s, \tau_s^{-1}) \\
+          \text{logit}(\theta_{sc}) &= \frac{\theta_{sc}}{1 - \theta_{sc}} = \eta_{sc} \\
+          \eta_{sc} | \mu_s, \tau_s^{-1} &\sim N(\mu_s,\, \tau_s^{-1}) \\
+          \mu_s &\sim N(\mu_0 = 0, \sigma_0^2 = 20) \\
+          \tau_s &\sim \text{Gamma}(\alpha_0 = 1,\, \beta_0 = 0.1) \\
+          s &= 1, 2, \ldots, 5 \\
+          c &= 1, 2, \ldots, 10 \\
+          f &= 1, 2, \ldots, 30 \\
           \end{aligned}
           $$
         </div>
 
         <span class="label">Parameter Interpretations</span>
         <ul style="font-family:var(--sans); font-size:0.86rem; color:var(--ink-2); line-height:1.75; padding-left:1.2rem; margin-top:0.4rem; margin-bottom:1.2rem;">
-          <li>\(y_{scf}\): 1 if company \(c\) in sector \(s\) had a positive return at observation \(f\), else 0.</li>
-          <li>\(\theta_{sc}\): Probability of a positive return for company \(c\) in sector \(s\).</li>
+          <li>\(y_{scf}\): Observable response - 1 if company \(c\) in sector \(s\) had a positive return at observation \(f\), else 0.</li>
+          <li>\(\theta_{sc}\): Probability of a positive net return for company \(c\) in sector \(s\).</li>
+          <li>\(\eta_{sc}\): Log-odds of a positive return for company \(c\) in sector \(s\).</li>
           <li>\(\mu_s\): Sector-level mean log-odds of a positive return.</li>
-          <li>\(\tau_s\): Precision (inverse variance) within sector \(s\) — higher = more consistent.</li>
+          <li>\(\tau_s\): Precision of the log-odds within sector \(s\).</li>
+          <li>\(s\), \(c\), \(f\): Sector, company, and observation indices respectively.</li>
         </ul>
 
         <div class="card-divider"></div>
 
         <span class="label">Key Findings</span>
         <p class="card-text">
-          Sectors 1, 2, and 5 are recommended for investment. Company 10 in sector 2 and company 5 in sector 5 showed the highest posterior probabilities of positive returns. Sector 1 exhibited the highest posterior precision — indicating the most consistent company performance and lowest within-sector variance, making it the most stable choice.
+          Sectors 1, 2, and 5 are recommended for investment. Company 10 in sector 2 and company 5 in sector 5 showed the 
+          highest posterior probabilities of positive returns. Sector 1 exhibited the highest posterior precision, 
+          indicating the most consistent company performance and lowest within-sector variance, making it the most stable choice.
         </p>
 
-        <a href="FinalProject.pdf" class="btn btn-dark btn-sm" target="_blank" rel="noopener" style="margin-top:0.4rem;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Full Report
-        </a>
+        <span class="label">Visualization</span>
+        <div class="screenshot-placeholder" aria-label="Screenshot placeholder">
+          <div class="screenshot-placeholder-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <span class="screenshot-placeholder-label">images/StockResults.png</span>
+          <span class="screenshot-placeholder-hint">Replace with posterior distribution or sector comparison plot</span>
+        </div>
+
+        <!-- Project footer -->
+        <div class="project-footer">
+          <a href="https://github.com/theofficialtonytran/stock-market-bayesian-model" target="_blank" rel="noopener" class="github-btn" aria-label="View Stock Market project on GitHub">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+          <a href="FinalProject.pdf" class="btn btn-dark btn-sm" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Full Report
+          </a>
+        </div>
+
       </div>
     </div>
 
