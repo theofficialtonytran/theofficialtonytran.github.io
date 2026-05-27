@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Me — Tony Tran</title>
+  <title>About Me - Tony Tran</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -44,20 +44,25 @@
     /* ── Photo grids ── */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(2, 200px);
+      gap: 8px;
       margin-top: 1rem;
     }
+
     .photo-grid img {
-      width: 100%; height: 210px;
+      width: 160px;
+      height: 160px;
+      flex-shrink: 0;
       object-fit: cover;
       border-radius: var(--r-md);
       border: 1px solid var(--border);
       display: block;
       transition: transform 0.3s var(--ease), box-shadow 0.3s;
     }
+
     .photo-grid img:hover {
-      transform: scale(1.02);
+      transform: scale(1.75);
       box-shadow: var(--shadow-md);
     }
 
@@ -139,7 +144,7 @@
   <div class="page-header">
     <span class="page-kicker">Background</span>
     <h1 class="page-title">Data analyst, researcher,<br><em>lion dancer.</em></h1>
-    <p class="page-desc">A little bit of everything — grounded in data, driven by community.</p>
+    <p class="page-desc">A little bit of everything: Data, Fitness, Community, and more.</p>
   </div>
 </div>
 
@@ -162,7 +167,8 @@
             I'm a recent graduate from The Ohio State University with a degree in Data Analytics and a specialization in Computational Analytics. I'm drawn to problems where messy, real-world data can be shaped into something that actually changes a decision.
           </p>
           <p class="card-text" style="margin-top:0.8rem;">
-            My work spans optimization modeling, Bayesian statistics, energy analytics, and business intelligence — always with an eye toward communication. A model nobody can interpret doesn't move the needle.
+            My work spans optimization modeling, Bayesian statistics, energy analytics, business intelligence, and more. I believe in the power of data-driven decision-making. 
+            As they say, "Analytics is the use of data to turn uncertainty into insight." - Daniel Keys Moran
           </p>
           <div class="seeking-banner">
             <span class="seeking-dot" aria-hidden="true"></span>
@@ -173,7 +179,7 @@
 
       <div class="card reveal reveal-d1">
         <div class="card-body">
-          <span class="label-sage">Toolkit snapshot</span>
+          <span class="label-sage">Highlighted Toolkit snapshot</span>
           <div class="skill-groups">
             <div class="skill-group">
               <span class="skill-group-label">Languages</span>
@@ -181,34 +187,32 @@
                 <span class="chip on">Python</span>
                 <span class="chip on">R</span>
                 <span class="chip on">SQL</span>
-                <span class="chip">Java</span>
-                <span class="chip">C</span>
               </div>
             </div>
             <div class="skill-group">
               <span class="skill-group-label">Libraries</span>
               <div class="chip-row">
-                <span class="chip">pandas</span>
-                <span class="chip">NumPy</span>
-                <span class="chip">scikit-learn</span>
-                <span class="chip">matplotlib</span>
+                <span class="chip on">pandas</span>
+                <span class="chip on">NumPy</span>
+                <span class="chip on">Optimization Modeling</span>
+                <span class="chip">Bayesian Analysis</span>
               </div>
             </div>
             <div class="skill-group">
               <span class="skill-group-label">Visualization</span>
               <div class="chip-row">
                 <span class="chip on">Tableau</span>
-                <span class="chip">Excel</span>
-                <span class="chip">Power BI</span>
-              </div>
+                <span class="chip on">Microsoft Excel</span>
+                <span class="chip on">EDA</span>
+                    </div>
             </div>
             <div class="skill-group">
               <span class="skill-group-label">Tools</span>
               <div class="chip-row">
                 <span class="chip on">Gurobi</span>
-                <span class="chip">Git</span>
+                <span class="chip">Git / GitHub</span>
                 <span class="chip">LaTeX</span>
-                <span class="chip">DBeaver</span>
+                <span class="chip">Power BI</span>
               </div>
             </div>
           </div>
@@ -233,7 +237,7 @@
     <div class="card reveal" style="margin-bottom:1rem;">
       <div class="card-body">
         <span class="card-tag">Community & Leadership</span>
-        <h3 class="card-title">UVSA Midwest — Analytics &amp; Web</h3>
+        <h3 class="card-title">UVSA Midwest - Analytics &amp; Web</h3>
         <p class="card-text">
           Volunteered with the Union of Vietnamese Student Associations across the Midwest, supporting analytics initiatives and collaborating on data-driven projects and web development efforts. Led data reporting for regional programming, helping the organization understand engagement trends and resource allocation.
         </p>
@@ -244,11 +248,15 @@
     <div class="card reveal reveal-d1">
       <div class="card-body">
         <span class="card-tag">Academic Research</span>
-        <h3 class="card-title">Undergraduate Research — Diffusion &amp; Random Walks</h3>
+        <h3 class="card-title">Undergraduate Research - Diffusion &amp; Random Walks</h3>
         <p class="card-text">
-          Participated in undergraduate research focused on modeling diffusion through random walks and reaction-diffusion systems. This experience sharpened my intuition for probability, stochastic processes, and computational simulation — skills that directly inform my approach to Bayesian modeling.
+          Participated in undergraduate research focused on modeling diffusion through random walks and reaction-diffusion systems. This experience sharpened my intuition for probability, stochastic processes, and computational simulation - skills that directly inform my approach to Bayesian modeling.
         </p>
         <img src="images/ResearchPoster.png" alt="Undergraduate research poster" class="research-img">
+        <a href="images/ResearchPoster.png" class="btn btn-dark btn-sm" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            View Research Poster
+        </a>
       </div>
     </div>
   </div>
@@ -267,9 +275,9 @@
         <span class="card-tag">Community · Performance</span>
         <h3 class="card-title">Lion Dancing</h3>
         <p class="card-text">
-          I'm a Lion Dancer and coach. Our team performs every Chinese New Year for Ohio State's APIDA culture show as well as for Linh Son Pagoda. It's physically demanding — and the bond it creates with teammates and community makes it one of the most meaningful things I do outside of work.
+          I'm a Lion Dancer and coach. Our team performs every Chinese New Year for Ohio State's APIDA culture show as well as for Linh Son Pagoda. It's physically demanding, but the bond it creates with my teammates and community makes it one of the most meaningful things I do outside of work.
         </p>
-        <img src="images/LionDance.jpg" alt="2025–2026 Lion Dance Team" class="feature-img">
+        <img src="images/LionDance.jpg" alt="2025-2026 Lion Dance Team" class="feature-img">
       </div>
     </div>
 
@@ -277,12 +285,19 @@
       <div class="card-body">
         <span class="card-tag">Personal</span>
         <h3 class="card-title">Hobbies</h3>
-        <p class="card-text">Besides that, I enjoy exercising, traveling, bowling, and spending time with friends.</p>
+        <p class="card-text">Besides that, I enjoy exercising, traveling, eating, and spending time with friends.</p>
         <div class="photo-grid" style="margin-top:1rem;">
           <img src="images/Physique.jpg" alt="Exercising">
           <img src="images/Traveling.jpg" alt="Traveling">
           <img src="images/Bowling.jpg" alt="Bowling">
           <img src="images/Friends.jpg" alt="Friends">
+          <img src="images/Eating.jpg" alt="Got Caught Eating">
+          <img src="images/Arcade.jpg" alt="Arcade">
+          <img src="images/SummerCamp.jpg" alt="Summer Camp">
+          <img src="images/Friendsp2.jpg" alt="Friends 2">
+          <img src="images/Dinner.jpg" alt="Dinner">
+          <img src="images/Photoshoot.jpg" alt="Photoshoot">
+        </div>
         </div>
       </div>
     </div>

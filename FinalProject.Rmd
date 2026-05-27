@@ -1,0 +1,718 @@
+---
+title: "Stock Market Analysis"
+author: "Tony Tran"
+date: "2025-04-27"
+output: pdf_document
+mainfont: "Times New Roman"
+fontsize: 12pt
+geometry: margin=1in
+header-includes:
+  - \usepackage{setspace}  
+  - \doublespacing         
+---
+
+# Background
+
+### Goal
+
+We are interested in the probability of each stock that returns a positive return in a given period within the market. This information is very crucial for evaluating whether investing in a certain company is a good choice or not.
+
+### Description of data
+
+In our dataset, we have three columns: sector, stock, and flip. Each sector represents a different field of business, taking values of 1 through 5 to represent what sector each company belongs to. Within those 5 sectors, we have stock to represent a company. This variable can take on the values 1 through 10 to represent the index for the company number within each sector. Lastly, we have 30 observations for if the stock returned a net positive or negative. This is also called a flip, because our outcome results in either a 1 for a net positive or 0 for a net negative return.
+
+### Exploratory Data Analysis
+
+```{r, warning=FALSE, echo=FALSE}
+stock_file <- read.csv("C:/Users/Tony/OneDrive/Desktop/Website/stock-market-bayesian-model/data/stock_flips.csv")
+#View(stock_file)
+```
+
+For a given stock, the return periods from one period to the next are iid (independant and identically distributed). we have 1500 observations, comprising of 5 sectors, each with 10 company and their corresponding stock, as well as 30 "flips" for each stock.
+
+Some limitations and potential sources of bias can come from the rates of the stock market. The stock market is volatile and can be unpredictable, especially depending on the state of the economy. The period of which this data was obtained is undefined as well, meaning this dataset could be outdated and may not provide useful insights compared to markets today.
+
+# Defining the model
+
+### Bayesian Inference
+
+Using Bayesian theory, we can find the probability of each stock that returns a positive return in a given period within the market. First, we need to choose which model we'd like to work with. Since each company in a sector is related to each other (in a sense that one company actions could influence another's stock), we will use a random effect hierarchical model.
+
+For our likelihood, we need to look at stock returns for companies nested in sectors. This can be modeled by a Bernoulli likelihood of $y_{scf} | \theta_{sc} \sim Bern(\theta_{sc})$ where
+
+$$
+\begin{aligned}
+y_{scf} &\text{ is a binary variable that represents the observed} \\
+&\text{net gain/loss of stock } f \text{ at company c in sector s.} \\
+&= 1 \text{ if positive return; 0 otherwise.}\\
+\theta_{sc} &\text{ represents the probability of a positive net return of company c in sector s} \\
+\end{aligned}
+$$
+
+The full likelihood can be written as
+
+$$
+L(\theta_{sc} | y_{scf}) \propto \prod_{s=1}^5 \prod_{c=1}^{10} \prod_{f=1}^{30} \theta_{sc}^{y_{scf}} (1-\theta_{sc})^{1-y_{scf}} \\
+$$
+
+For $\theta_{sc}$, we can apply the log-odds because the model involves inter dependencies between stocks within the same company, where a change in one stock's performance could influence others. We can also assume that each sector and their companies are iid as well, leaving us with
+
+$$
+\begin{aligned}
+\theta_{sc} &\stackrel{iid} \sim p(\theta  | \mu_{s}, \tau_{s}^{-1}) \\
+logit(\theta_{sc}) &= log(\frac{\theta_{sc}}{1-\theta_{sc}}) = \eta_{sc} \\
+\end{aligned}
+$$
+
+Since we don't know much information about our initial value, we can start with a weak informative prior of $logit(\theta_{sc}) = \eta_{sc}$, where $\eta_{sc} | \mu_s \tau_s \sim N(\mu_s, \tau_s^{-1})$ where
+
+$$
+\begin{aligned}
+\mu_s &\sim N(\mu_0, \sigma^2_0) \\
+\tau_s^{-1} &\sim IG(\alpha_0, \beta_0)
+\end{aligned}
+$$
+
+### Hyperpriors
+
+We will assume a N($\mu_0 = 0, \sigma_0^2 = 20$) weak mean prior because we aren't yet sure about this sector's success, and we leave the variance small in order to update our model in small steps.
+
+Lastly, we will assume an IG($\alpha_0 = 1, \beta_0 = 0.1$) weak precision prior because it provides flexibility in our precision. In this context, it allows for high or low variability between companies in the same sector.
+
+### Overview/Model details
+
+$$
+\begin{aligned}
+y_{scf} &\stackrel{ind}\sim p(y | \theta_{sc}) \\
+\theta_{sc} &\stackrel{iid} \sim p(\theta  | \mu_{s}, \tau_{s}^{-1}) \\
+logit(\theta_{sc}) &= log(\frac{\theta_{sc}}{1-\theta_{sc}}) = \eta_{sc} \\
+\eta_{sc} | \mu_s \tau_s &\sim N(\mu_s, \tau_s^{-1}) \\
+\mu_s &\sim N(\mu_0 = 0, \sigma_0^2 = 20) \\
+\tau_s &\sim Gamma(\alpha_0 = 1, \beta_0 = 0.1) \\
+s &= 1, 2, ..., 5 \\
+c &= 1, 2, ..., 10 \\
+f &= 1, 2, ..., 30
+\end{aligned}
+$$
+
+Interpretations of each parameter:
+
+-   $y_{scf}$: The observable response variable where $y_{scf}$ = 1 if company $c$ in sector $s$ had a positive return at flip $f$, with 0 otherwise.
+
+-   $\theta_{sc}$: The probability of observing a positive net return of company $c$ in sector $s$.
+
+-   $\eta_{sc}$: The log-odds of a positive return at company $c$ in sector $s$.
+
+-   $\mu_s$: The sector mean log-odds of a positive return.
+
+-   $\tau_s^{-1}$: The precision log-odds of a positive return at company $c$ in sector $s$.
+
+-   $s$: Number of sectors (1-5)
+
+-   $c$: Number of companies and their stocks (1-10)
+
+-   $f$: Number of observations (flips) in a stock, returning either 1 or 0 for a positive/negative net return (1-30).
+
+### Fitting the model
+
+Now that we have our likelihood and our prior, we can begin building a model using JAGS. Reference R code in appendix.
+
+# Model Diagnostics
+
+$$
+\begin{aligned}
+&\text{Numer of iterations: 60,000} \\
+&\text{Number of burn-in iterations: 20,000} \\
+&\text{Number of adapt iterations: 20,000} \\
+&\text{Starting values: } \\
+&\eta_{[s, c]} = \text{Log odds of flips for company stock c in sector s}\\
+&\mu_{[s]} = \text{Average log odds of companies' stocks across sector s} \\
+&\tau_{[s]} = \text{Log odds precision of companies' stocks across sector s} \\
+&\text{for s = 1, ..., 5; c = 1, ..., 10}
+\end{aligned}
+$$
+
+```{r, warning=FALSE, echo=FALSE, include=FALSE, results='hide'}
+set.seed(614)
+S <- length(unique(stock_file$sector)) # S = 5; 5 total sectors
+C <- length(unique(stock_file$stock)) # C = 10; 10 total companies and their stocks
+F <- 30 # 30 total observations for each stock
+N <- 60000 # Total number of iterations, including burn-in and adaptation
+nburn <- 20000
+nadapt <- 20000
+
+y_array <- array(rbinom(S * C * F, size = 1, prob = 0.5), dim = c(S, C, F)) #Array to hold all observations
+```
+
+```{r, warning=FALSE, echo=FALSE, include=FALSE, results='hide'}
+#Install packages needed
+library(rjags)
+library(coda)
+
+mymodel <- "model {
+#likelihood
+for (s in 1:S) {
+  for (c in 1:C) {
+    for (f in 1:F) {
+    #likelihood - loop through each sector, company, and flips to get likelihood
+      y[s, c, f] ~ dbern(theta[s, c])
+    }
+  eta[s, c] ~ dnorm(mu[s], tau[s])   # Eta represents company log-odds of positive flips
+  theta[s, c] <- ilogit(eta[s, c])   # Convert log-odds to probability
+  }
+  
+}
+
+#prior
+for (s in 1:S) {
+    mu[s] ~ dnorm(0, 1/20)            # mean log-odds across sectors
+    tau[s] ~ dgamma(1, 0.1)           # precision across sectors
+  }
+}
+"
+```
+
+```{r, warning=FALSE, echo=FALSE, include=FALSE, results='hide'}
+data_jags <- list(
+  y = y_array,
+  S = S,
+  C = C,
+  F = F
+)
+set.seed(614)
+myinit <- list(
+    .RNG.name = "base::Super-Duper",
+    .RNG.seed = 614,
+    mu = rnorm(S, 0, sqrt(20)),
+    tau = rgamma(S, 1, 0.1),
+    eta = array(rnorm(S * C), dim = c(S, C))
+  )
+fitModel= jags.model(textConnection(mymodel),data=data_jags,inits=myinit,n.chains=1, n.adapt = nadapt)
+update(fitModel, nburn)
+fit.samples=coda.samples(fitModel, c("mu", "tau", "eta"), n.iter=N)
+```
+
+```{r, warning=FALSE, include=FALSE, results='hide', echo=FALSE}
+stats <- summary(fit.samples)$statistics
+```
+
+### Initial Interpretations
+
+Traceplots (1.3) and boxplots (1.4) show that the algorithm has converged, with $\eta_{sc}$ stabilizing around 0 within a $\pm$ 0.5 logit range. 
+
+A look at the initial values (1.5) lets us know that the burn-in and adaption period were effective, as our data has converged and become stationary.
+
+ESS values (1.6) range from roughly 15,000–22,000. Since we have a relatively high ESS (after taking into account burnin and adaption), we can say that our MCMC algorithm is efficient.
+
+ACF plots (1.7) drop off steeply, suggesting there is low autocorrelation and good sample independence. Therefore, we can not only conclude that our samples for each sector are independent, but are efficiently being drawn to the true posterior.
+
+### Summary Interpretations
+
+Looking at the summary (1.3), we can observe the mean, standard deviation, and corresponding confidence intervals for each $\eta_{sc}$, $\mu_{s}$, and $\tau_{s}$.
+
+However, we are most interested in the mean, as returns of individual stocks are typically modeled as varying around a common sector mean.
+
+$\mu_s$ can give us insights on which sector preforms the best on average, as it represents the log-odds of a positive return for each sector. Here, it seems like we should invest in sectors 1, 2, and 5, as the average log odds of company stock return a net positive. 
+
+```{r, warning=FALSE, echo=FALSE}
+mu_means <- stats[grepl("mu", rownames(stats)), "Mean"]
+head(mu_means)
+```
+
+```{r, echo=FALSE, message=FALSE}
+par(bg = "white")
+barplot(mu_means, 
+        names.arg = c("Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5"), 
+        main="Average Sector Returns", 
+        xlab="Sector", 
+        ylab="Average Log-Odds", 
+        col = c("#4C78A8", "#4C78A8", "#E45756", "#E45756", "#4C78A8"), 
+        space = 0.3, 
+        cex.names = 1.1,
+        cex.lab = 1.2,
+        cex.main = 1.4
+        )
+abline(h = 0, lwd = 2, col = "darkgray") 
+```
+
+Taking a closer look at the mean of each $\eta_{sc}$, this represents the average log-odds of a positive return for each company c in a given sector s. We can use this information to look at which companies in sector s are worth investing in. Here are some of the highest return companies and their sectors. Note: Full $\eta_{sc}$ listed in Appendix.
+
+```{r, echo=FALSE, warning=FALSE}
+eta_means <- stats[grepl("eta", rownames(stats)), "Mean"]
+eta_sorted <- head(sort(eta_means, decreasing=TRUE), 6)
+eta_sorted
+```
+
+```{r, echo=FALSE, message=FALSE}
+par(bg = "white", mar = c(8, 5, 4, 2))
+
+barplot(
+  eta_sorted,
+  names.arg = c("Eta [2,10]", "Eta [5,5]", "Eta [2,7]",
+                "Eta [1,1]", "Eta [1,10]", "Eta [5,7]"),
+  main = "Average Returns by Eta Pair",
+  ylab = "Average Log-Odds",
+  col = "#4C78A8",
+  border = NA,
+  space = 0.3,
+  las = 2,
+  cex.names = 0.9,
+  cex.lab = 1.2,
+  cex.main = 1.4
+)
+
+abline(h = 0, col = "gray50", lwd = 2)
+```
+
+Meanwhile, the means of $\tau_s$ tells us the average precision of company c's log-odds across sector s. A larger precision in sector s indicates that the companies within these sectors and their stocks have more similar behaviors. Likewise, a smaller precision indicates that companies within sector s have more different behaviors. Given that sectors 1, 2, and 5 return an average log odds net positive, sector 1 has the highest consistency.
+
+```{r, warning=FALSE, echo=FALSE}
+tau_means <- stats[grepl("tau", rownames(stats)), "Mean"]
+head(tau_means)
+```
+
+```{r, echo=FALSE, message=FALSE}
+par(bg = "white", mar = c(5, 5, 4, 2))
+
+barplot(
+  tau_means,
+  names.arg = c("Tau 1", "Tau 2", "Tau 3", "Tau 4", "Tau 5"),
+  main = "Sector Precision Estimates",
+  ylab = "Average Precision",
+  col = "#4C78A8",
+  border = NA,
+  space = 0.3,
+  cex.names = 1,
+  cex.lab = 1.2,
+  cex.main = 1.4
+)
+```
+
+
+# Appendix
+
+1.1 - Initialization of variables.
+
+```{r, warning=FALSE}
+set.seed(614)
+S <- length(unique(stock_file$sector)) # S = 5; 5 total sectors
+C <- length(unique(stock_file$stock)) # C = 10; 10 total companies and their stocks
+F <- 30 # 30 total observations for each stock
+N <- 60000 # Total number of iterations, including burn-in and adaptation
+nburn <- 20000
+nadapt <- 20000
+
+y_array <- array(rbinom(S * C * F, size = 1, prob = 0.5), dim = c(S, C, F)) #Array to hold all observations
+```
+
+1.2 - JAGS code.
+
+```{r, warning=FALSE}
+#Install packages needed
+library(rjags)
+library(coda)
+
+mymodel <- "model {
+#likelihood
+for (s in 1:S) {
+  for (c in 1:C) {
+    for (f in 1:F) {
+    #likelihood - loop through each sector, company, and flips to get likelihood
+      y[s, c, f] ~ dbern(theta[s, c])
+    }
+  eta[s, c] ~ dnorm(mu[s], tau[s])   # Eta represents company log-odds of positive flips
+  theta[s, c] <- ilogit(eta[s, c])   # Convert log-odds to probability
+  }
+  
+}
+
+#prior
+for (s in 1:S) {
+    mu[s] ~ dnorm(0, 1/20)            # mean log-odds across sectors
+    tau[s] ~ dgamma(1, 0.1)           # precision across sectors
+  }
+}
+"
+```
+
+1.3 - JAGS model initialization.
+
+```{r, warning=FALSE}
+data_jags <- list(
+  y = y_array,
+  S = S,
+  C = C,
+  F = F
+)
+
+set.seed(614)
+myinit <- list(
+    .RNG.name = "base::Super-Duper",
+    .RNG.seed = 614,
+    mu = rnorm(S, 0, sqrt(20)),
+    tau = rgamma(S, 1, 0.1),
+    eta = array(rnorm(S * C), dim = c(S, C))
+  )
+fitModel= jags.model(textConnection(mymodel),data=data_jags,inits=myinit,n.chains=1, n.adapt = nadapt)
+update(fitModel, nburn)
+fit.samples=coda.samples(fitModel, c("mu", "tau", "eta"), n.iter=N)
+summary(fit.samples)
+traceplot(fit.samples)
+
+sink("diagnostics/model_summary.txt")
+print(summary(fit.samples))
+sink()
+
+# -----------------------------
+# Save traceplots to PDF
+# -----------------------------
+pdf("diagnostics/traceplots.pdf",
+    width = 12,
+    height = 8)
+
+traceplot(fit.samples)
+
+dev.off()
+```
+
+1.4 - Posterior boxplots of all sectors and companies stocks.
+
+```{r, warning=FALSE}
+#Looking at each sector seperately
+sector1_matrix <- as.matrix(fit.samples)
+boxplot(sector1_matrix[, c("eta[1,1]", "eta[1,2]", "eta[1,3]", "eta[1,4]", "eta[1,5]", "eta[1,6]", "eta[1,7]", "eta[1,8]", "eta[1,9]", "eta[1,10]", "mu[1]")],
+        main = "Posterior Boxplots for sector 1 and mu",
+        col = "blue",
+        las = 2)  # Rotates axis labels for readability
+
+sector2_matrix <- as.matrix(fit.samples)
+boxplot(sector2_matrix[, c("eta[2,1]", "eta[2,2]", "eta[2,3]", "eta[2,4]", "eta[2,5]", "eta[2,6]", "eta[2,7]", "eta[2,8]", "eta[2,9]", "eta[2,10]", "mu[2]")],
+        main = "Posterior Boxplots for sector 2 and mu",
+        col = "red",
+        las = 2)  # Rotates axis labels for readability
+
+sector3_matrix <- as.matrix(fit.samples)
+boxplot(sector3_matrix[, c("eta[3,1]", "eta[3,2]", "eta[3,3]", "eta[3,4]", "eta[3,5]", "eta[3,6]", "eta[3,7]", "eta[3,8]", "eta[3,9]", "eta[3,10]", "mu[3]")],
+        main = "Posterior Boxplots for sector 3 and mu",
+        col = "green",
+        las = 2)  # Rotates axis labels for readability
+
+sector4_matrix <- as.matrix(fit.samples)
+boxplot(sector4_matrix[, c("eta[4,1]", "eta[4,2]", "eta[4,3]", "eta[4,4]", "eta[4,5]", "eta[4,6]", "eta[4,7]", "eta[4,8]", "eta[4,9]", "eta[4,10]", "mu[4]")],
+        main = "Posterior Boxplots for sector 4 and mu",
+        col = "yellow",
+        las = 2)  # Rotates axis labels for readability
+
+sector5_matrix <- as.matrix(fit.samples)
+boxplot(sector5_matrix[, c("eta[5,1]", "eta[5,2]", "eta[5,3]", "eta[5,4]", "eta[5,5]", "eta[5,6]", "eta[5,7]", "eta[5,8]", "eta[5,9]", "eta[5,10]", "mu[5]")],
+        main = "Posterior Boxplots for sector 5 and mu",
+        col = "pink",
+        las = 2)  # Rotates axis labels for readability
+tau_matrix <- as.matrix(fit.samples)
+boxplot(tau_matrix[, c("tau[1]", "tau[2]", "tau[3]", "tau[4]", "tau[5]")],
+        main = "Posterior Boxplots for tau",
+        col = "purple",
+        las = 2)  # Rotates axis labels for readability
+
+# Create diagnostics folder if it doesn't exist
+if (!dir.exists("diagnostics")) {
+  dir.create("diagnostics")
+}
+
+# Open PDF device
+pdf("diagnostics/all_boxplots.pdf",
+    width = 12,
+    height = 8)
+
+# ----- Sector 1 -----
+sector1_matrix <- as.matrix(fit.samples)
+
+boxplot(
+  sector1_matrix[, c(
+    "eta[1,1]", "eta[1,2]", "eta[1,3]", "eta[1,4]", "eta[1,5]",
+    "eta[1,6]", "eta[1,7]", "eta[1,8]", "eta[1,9]", "eta[1,10]",
+    "mu[1]"
+  )],
+  main = "Posterior Boxplots for Sector 1 and mu",
+  col = "blue",
+  las = 2
+)
+
+# ----- Sector 2 -----
+sector2_matrix <- as.matrix(fit.samples)
+
+boxplot(
+  sector2_matrix[, c(
+    "eta[2,1]", "eta[2,2]", "eta[2,3]", "eta[2,4]", "eta[2,5]",
+    "eta[2,6]", "eta[2,7]", "eta[2,8]", "eta[2,9]", "eta[2,10]",
+    "mu[2]"
+  )],
+  main = "Posterior Boxplots for Sector 2 and mu",
+  col = "red",
+  las = 2
+)
+
+# ----- Sector 3 -----
+sector3_matrix <- as.matrix(fit.samples)
+
+boxplot(
+  sector3_matrix[, c(
+    "eta[3,1]", "eta[3,2]", "eta[3,3]", "eta[3,4]", "eta[3,5]",
+    "eta[3,6]", "eta[3,7]", "eta[3,8]", "eta[3,9]", "eta[3,10]",
+    "mu[3]"
+  )],
+  main = "Posterior Boxplots for Sector 3 and mu",
+  col = "green",
+  las = 2
+)
+
+# ----- Sector 4 -----
+sector4_matrix <- as.matrix(fit.samples)
+
+boxplot(
+  sector4_matrix[, c(
+    "eta[4,1]", "eta[4,2]", "eta[4,3]", "eta[4,4]", "eta[4,5]",
+    "eta[4,6]", "eta[4,7]", "eta[4,8]", "eta[4,9]", "eta[4,10]",
+    "mu[4]"
+  )],
+  main = "Posterior Boxplots for Sector 4 and mu",
+  col = "yellow",
+  las = 2
+)
+
+# ----- Sector 5 -----
+sector5_matrix <- as.matrix(fit.samples)
+
+boxplot(
+  sector5_matrix[, c(
+    "eta[5,1]", "eta[5,2]", "eta[5,3]", "eta[5,4]", "eta[5,5]",
+    "eta[5,6]", "eta[5,7]", "eta[5,8]", "eta[5,9]", "eta[5,10]",
+    "mu[5]"
+  )],
+  main = "Posterior Boxplots for Sector 5 and mu",
+  col = "pink",
+  las = 2
+)
+
+# ----- Tau -----
+tau_matrix <- as.matrix(fit.samples)
+
+boxplot(
+  tau_matrix[, c(
+    "tau[1]", "tau[2]", "tau[3]", "tau[4]", "tau[5]"
+  )],
+  main = "Posterior Boxplots for tau",
+  col = "purple",
+  las = 2
+)
+
+# Close PDF device
+dev.off()
+```
+
+
+
+1.5 - Starting values.
+
+```{r, warning=FALSE}
+head(fit.samples[[1]])
+```
+
+1.6 - Effective Sample Size of all sectors and companies stocks.
+
+```{r}
+#Sector 1
+
+cat("ESS of sector 1 company 1: ", effectiveSize(sector1_matrix[, c("eta[1,1]")]), "\n")
+cat("ESS of sector 1 company 2: ", effectiveSize(sector1_matrix[, c("eta[1,2]")]), "\n")
+cat("ESS of sector 1 company 3: ", effectiveSize(sector1_matrix[, c("eta[1,3]")]), "\n")
+cat("ESS of sector 1 company 4: ", effectiveSize(sector1_matrix[, c("eta[1,4]")]), "\n")
+cat("ESS of sector 1 company 5: ", effectiveSize(sector1_matrix[, c("eta[1,5]")]), "\n")
+cat("ESS of sector 1 company 6: ", effectiveSize(sector1_matrix[, c("eta[1,6]")]), "\n")
+cat("ESS of sector 1 company 7: ", effectiveSize(sector1_matrix[, c("eta[1,7]")]), "\n")
+cat("ESS of sector 1 company 8: ", effectiveSize(sector1_matrix[, c("eta[1,8]")]), "\n")
+cat("ESS of sector 1 company 9: ", effectiveSize(sector1_matrix[, c("eta[1,9]")]), "\n")
+cat("ESS of sector 1 company 10: ", effectiveSize(sector1_matrix[, c("eta[1,10]")]), "\n")
+
+#Sector 2
+
+cat("ESS of sector 2 company 1: ", effectiveSize(sector2_matrix[, c("eta[2,1]")]), "\n")
+cat("ESS of sector 2 company 2: ", effectiveSize(sector2_matrix[, c("eta[2,2]")]), "\n")
+cat("ESS of sector 2 company 3: ", effectiveSize(sector2_matrix[, c("eta[2,3]")]), "\n")
+cat("ESS of sector 2 company 4: ", effectiveSize(sector2_matrix[, c("eta[2,4]")]), "\n")
+cat("ESS of sector 2 company 5: ", effectiveSize(sector2_matrix[, c("eta[2,5]")]), "\n")
+cat("ESS of sector 2 company 6: ", effectiveSize(sector2_matrix[, c("eta[2,6]")]), "\n")
+cat("ESS of sector 2 company 7: ", effectiveSize(sector2_matrix[, c("eta[2,7]")]), "\n")
+cat("ESS of sector 2 company 8: ", effectiveSize(sector2_matrix[, c("eta[2,8]")]), "\n")
+cat("ESS of sector 2 company 9: ", effectiveSize(sector2_matrix[, c("eta[2,9]")]), "\n")
+cat("ESS of sector 2 company 10: ", effectiveSize(sector2_matrix[, c("eta[2,10]")]), "\n")
+
+#Sector 3
+
+cat("ESS of sector 3 company 1: ", effectiveSize(sector3_matrix[, c("eta[3,1]")]), "\n")
+cat("ESS of sector 3 company 2: ", effectiveSize(sector3_matrix[, c("eta[3,2]")]), "\n")
+cat("ESS of sector 3 company 3: ", effectiveSize(sector3_matrix[, c("eta[3,3]")]), "\n")
+cat("ESS of sector 3 company 4: ", effectiveSize(sector3_matrix[, c("eta[3,4]")]), "\n")
+cat("ESS of sector 3 company 5: ", effectiveSize(sector3_matrix[, c("eta[3,5]")]), "\n")
+cat("ESS of sector 3 company 6: ", effectiveSize(sector3_matrix[, c("eta[3,6]")]), "\n")
+cat("ESS of sector 3 company 7: ", effectiveSize(sector3_matrix[, c("eta[3,7]")]), "\n")
+cat("ESS of sector 3 company 8: ", effectiveSize(sector3_matrix[, c("eta[3,8]")]), "\n")
+cat("ESS of sector 3 company 9: ", effectiveSize(sector3_matrix[, c("eta[3,9]")]), "\n")
+cat("ESS of sector 3 company 10: ", effectiveSize(sector3_matrix[, c("eta[3,10]")]), "\n")
+
+#Sector 4
+
+cat("ESS of sector 4 company 1: ", effectiveSize(sector4_matrix[, c("eta[4,1]")]), "\n")
+cat("ESS of sector 4 company 2: ", effectiveSize(sector4_matrix[, c("eta[4,2]")]), "\n")
+cat("ESS of sector 4 company 3: ", effectiveSize(sector4_matrix[, c("eta[4,3]")]), "\n")
+cat("ESS of sector 4 company 4: ", effectiveSize(sector4_matrix[, c("eta[4,4]")]), "\n")
+cat("ESS of sector 4 company 5: ", effectiveSize(sector4_matrix[, c("eta[4,5]")]), "\n")
+cat("ESS of sector 4 company 6: ", effectiveSize(sector4_matrix[, c("eta[4,6]")]), "\n")
+cat("ESS of sector 4 company 7: ", effectiveSize(sector4_matrix[, c("eta[4,7]")]), "\n")
+cat("ESS of sector 4 company 8: ", effectiveSize(sector4_matrix[, c("eta[4,8]")]), "\n")
+cat("ESS of sector 4 company 9: ", effectiveSize(sector4_matrix[, c("eta[4,9]")]), "\n")
+cat("ESS of sector 4 company 10: ", effectiveSize(sector4_matrix[, c("eta[4,10]")]), "\n")
+
+#sector 5
+
+cat("ESS of sector 5 company 1: ", effectiveSize(sector5_matrix[, c("eta[5,1]")]), "\n")
+cat("ESS of sector 5 company 2: ", effectiveSize(sector5_matrix[, c("eta[5,2]")]), "\n")
+cat("ESS of sector 5 company 3: ", effectiveSize(sector5_matrix[, c("eta[5,3]")]), "\n")
+cat("ESS of sector 5 company 4: ", effectiveSize(sector5_matrix[, c("eta[5,4]")]), "\n")
+cat("ESS of sector 5 company 5: ", effectiveSize(sector5_matrix[, c("eta[5,5]")]), "\n")
+cat("ESS of sector 5 company 6: ", effectiveSize(sector5_matrix[, c("eta[5,6]")]), "\n")
+cat("ESS of sector 5 company 7: ", effectiveSize(sector5_matrix[, c("eta[5,7]")]), "\n")
+cat("ESS of sector 5 company 8: ", effectiveSize(sector5_matrix[, c("eta[5,8]")]), "\n")
+cat("ESS of sector 5 company 9: ", effectiveSize(sector5_matrix[, c("eta[5,9]")]), "\n")
+cat("ESS of sector 5 company 10: ", effectiveSize(sector5_matrix[, c("eta[5,10]")]), "\n")
+
+# Create empty dataframe
+ess_table <- data.frame(
+  Sector = integer(),
+  Company = integer(),
+  ESS = numeric()
+)
+
+# Convert samples to matrix once
+fit_matrix <- as.matrix(fit.samples)
+
+# Loop through sectors and companies
+for (s in 1:5) {
+  for (c in 1:10) {
+
+    param_name <- paste0("eta[", s, ",", c, "]")
+
+    ess_value <- effectiveSize(fit_matrix[, param_name])
+
+    ess_table <- rbind(
+      ess_table,
+      data.frame(
+        Sector = s,
+        Company = c,
+        ESS = round(ess_value, 2)
+      )
+    )
+  }
+}
+
+knitr::kable(ess_table,
+             caption = "Effective Sample Sizes for All Sectors and Companies")
+
+write.csv(
+  ess_table,
+  "diagnostics/effective_sample_sizes.csv",
+  row.names = FALSE
+)
+```
+
+1.7 - ACF of all $\eta_{sc}$.
+
+```{r}
+#sector 1
+acf(sector1_matrix[, c("eta[1,1]")])
+acf(sector1_matrix[, c("eta[1,2]")])
+acf(sector1_matrix[, c("eta[1,3]")])
+acf(sector1_matrix[, c("eta[1,4]")])
+acf(sector1_matrix[, c("eta[1,5]")])
+acf(sector1_matrix[, c("eta[1,6]")])
+acf(sector1_matrix[, c("eta[1,7]")])
+acf(sector1_matrix[, c("eta[1,8]")])
+acf(sector1_matrix[, c("eta[1,9]")])
+acf(sector1_matrix[, c("eta[1,10]")])
+
+#sector 2
+
+acf(sector2_matrix[, c("eta[2,1]")])
+acf(sector2_matrix[, c("eta[2,2]")])
+acf(sector2_matrix[, c("eta[2,3]")])
+acf(sector2_matrix[, c("eta[2,4]")])
+acf(sector2_matrix[, c("eta[2,5]")])
+acf(sector2_matrix[, c("eta[2,6]")])
+acf(sector2_matrix[, c("eta[2,7]")])
+acf(sector2_matrix[, c("eta[2,8]")])
+acf(sector2_matrix[, c("eta[2,9]")])
+acf(sector2_matrix[, c("eta[2,10]")])
+
+#sector 3
+
+acf(sector3_matrix[, c("eta[3,1]")])
+acf(sector3_matrix[, c("eta[3,2]")])
+acf(sector3_matrix[, c("eta[3,3]")])
+acf(sector3_matrix[, c("eta[3,4]")])
+acf(sector3_matrix[, c("eta[3,5]")])
+acf(sector3_matrix[, c("eta[3,6]")])
+acf(sector3_matrix[, c("eta[3,7]")])
+acf(sector3_matrix[, c("eta[3,8]")])
+acf(sector3_matrix[, c("eta[3,9]")])
+acf(sector3_matrix[, c("eta[3,10]")])
+
+#sector 4
+
+acf(sector4_matrix[, c("eta[4,1]")])
+acf(sector4_matrix[, c("eta[4,2]")])
+acf(sector4_matrix[, c("eta[4,3]")])
+acf(sector4_matrix[, c("eta[4,4]")])
+acf(sector4_matrix[, c("eta[4,5]")])
+acf(sector4_matrix[, c("eta[4,6]")])
+acf(sector4_matrix[, c("eta[4,7]")])
+acf(sector4_matrix[, c("eta[4,8]")])
+acf(sector4_matrix[, c("eta[4,9]")])
+acf(sector4_matrix[, c("eta[4,10]")])
+
+#sector 5
+
+acf(sector5_matrix[, c("eta[5,1]")])
+acf(sector5_matrix[, c("eta[5,2]")])
+acf(sector5_matrix[, c("eta[5,3]")])
+acf(sector5_matrix[, c("eta[5,4]")])
+acf(sector5_matrix[, c("eta[5,5]")])
+acf(sector5_matrix[, c("eta[5,6]")])
+acf(sector5_matrix[, c("eta[5,7]")])
+acf(sector5_matrix[, c("eta[5,8]")])
+acf(sector5_matrix[, c("eta[5,9]")])
+acf(sector5_matrix[, c("eta[5,10]")])
+
+# Convert samples to matrix once
+fit_matrix <- as.matrix(fit.samples)
+
+# Save all ACF plots into one PDF
+pdf("diagnostics/acf_plots.pdf",
+    width = 10,
+    height = 7)
+
+# Loop through sectors and companies
+for (s in 1:5) {
+  for (c in 1:10) {
+
+    param_name <- paste0("eta[", s, ",", c, "]")
+
+    acf(
+      fit_matrix[, param_name],
+      main = paste("ACF for", param_name)
+    )
+  }
+}
+
+# Close PDF device
+dev.off()
+```

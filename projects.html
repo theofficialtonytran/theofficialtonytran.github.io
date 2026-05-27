@@ -535,6 +535,13 @@
           <li>Initial state of charge: 0 kWh.</li>
         </ul>
 
+        <span class="label">Recommended Charging Schedule for a battery</span>
+        <p class="card-text">
+          Blue = charge, Red = discharge. We broke the day into 24 one-hour intervals and recommended charging during low-price hours (3-5am) and discharging during high-price hours (4-7pm) to maximize cost savings while respecting battery constraints.
+        </p>
+        <img src="images/Charging.jpg" alt="Screenshot of battery dispatch schedule visualization">
+
+
         <div class="notice">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Due to data confidentiality, detailed results cannot be shared publicly. The model produced a full 24-hour dispatch schedule and achieved significant verified cost savings.
@@ -599,14 +606,14 @@
           indicating the most consistent company performance and lowest within-sector variance, making it the most stable choice.
         </p>
 
-        <span class="label">Visualization</span>
-        <div class="screenshot-placeholder" aria-label="Screenshot placeholder">
-          <div class="screenshot-placeholder-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </div>
-          <span class="screenshot-placeholder-label">images/StockResults.png</span>
-          <span class="screenshot-placeholder-hint">Replace with posterior distribution or sector comparison plot</span>
-        </div>
+        <span class="label">Average Posterior distributions by Sector</span>
+        <img src="images/MuSectorReturns.png" alt="Posterior distributions of mu by sector">
+
+        <span class="label">Average Posterior Log-Odds by Sector and Company</span>
+        <img src="images/EtaSectorCompanyReturns.png" alt="Posterior distributions of eta by sector and company">
+
+        <span class="label">Average Posterior Precision by Sector</span>
+        <img src="images/PrecisionSectorReturns.png" alt="Posterior distributions of precision by sector">
 
         <!-- Project footer -->
         <div class="project-footer">
