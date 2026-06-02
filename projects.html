@@ -395,14 +395,97 @@
       </div>
     </div>
 
+        <!-- ══════════════════════════════════════
+        PROJECT 3: Logistics Operations Dashboard
+    ══════════════════════════════════════ -->
+    <div class="card project-card reveal" data-categories="visualization" id="logistics">
+      <div class="card-body">
+        <div class="project-header">
+          <div>
+            <div class="card-eyebrow">03 · Data Analysis</div>
+            <h2 class="card-title-lg">Logistics Operations Dashboard | 2022-2024</h2>
+          </div>
+          <span class="project-num-tag">data-analysis</span>
+        </div>
+        <div class="pill-row" style="margin-bottom:1.2rem;">
+          <span class="pill">Power BI</span><span class="pill">DAX</span><span class="pill">Data Modeling</span><span class="pill">Fleet Analytics</span><span class="pill">Supply Chain</span>
+        </div>
+
+        <span class="label">Overview</span>
+        <p class="card-text">
+          End-to-end business intelligence project analyzing three years of operational
+          data from a fictional Class 8 trucking company. Built a two-page Power BI
+          dashboard covering executive performance metrics and fleet cost analysis across
+          361,799 records and 14 interconnected tables, connected through a star schema
+          with TRIPS and LOADS as the central fact tables.
+        </p>
+
+        <div class="card-divider"></div>
+        <span class="label">Data Model</span>
+        <p class="card-text">
+          The dashboard connects 14 tables through 14 manually configured relationships
+          with single direction cross-filtering to avoid ambiguous filter paths. Core DAX
+          measures were built for total revenue, on-time rate, cost per mile, fuel cost
+          trends, maintenance cost by truck, and revenue per trip by driver.
+        </p>
+
+        <div class="card-divider"></div>
+        <span class="label">Key Findings</span>
+        <table class="styled-table">
+          <tr>
+            <th>Metric</th><th>Value</th><th>Notes</th>
+          </tr>
+          <tr><td>Total Revenue</td><td>$262.53M</td><td>Across 85K trips, 2022-2024</td></tr>
+          <tr><td>On-Time Delivery Rate</td><td>55.67%</td><td>Well below 85-95% industry standard</td></tr>
+          <tr><td>Total Fuel Cost</td><td>$95.59M</td><td>Peaked in early 2023, declined through 2024</td></tr>
+          <tr><td>Total Maintenance Cost</td><td>$5.73M</td><td>TRK00003 carries disproportionate share</td></tr>
+          <tr><td>Cost Per Mile</td><td>$5.35</td><td>Combined fuel and maintenance</td></tr>
+          <tr><td>Revenue Per Trip</td><td>$3.07K</td><td>Consistent across top drivers</td></tr>
+        </table>
+        <p class="card-text">
+          The most notable finding is the on-time delivery rate of 55.67% across all
+          origin cities. Every city in the top 8 shows nearly identical rates, which points
+          to a systemic operational issue rather than a route-specific problem. On the cost
+          side, fuel spend tracks real-world diesel price patterns, peaking in 2023 and
+          declining steadily into 2024. Customer revenue is also heavily concentrated in
+          two accounts, XYZ Wholesale and XYZ Foods, which represents a meaningful
+          business risk.
+        </p>
+
+        <div class="card-divider"></div>
+        <span class="label">Executive Overview</span>
+        <img src="images/ExecutiveOverview.png" alt="Power BI executive overview page showing revenue, trips, on-time rate, and customer breakdown">
+
+        <span class="label">Fleet and Cost Analysis</span>
+        <img src="images/Fleet_CostAnalysis.png" alt="Power BI fleet and cost analysis page showing fuel trends, maintenance costs, and driver productivity">
+
+        <div class="card-divider"></div>
+        <span class="label">How to View</span>
+        <p class="card-text">
+          The full interactive dashboard is available as a .pbix file in the repository.
+          Download Power BI Desktop for free at powerbi.microsoft.com, then open the
+          .pbix file directly. All data connections are embedded and will load automatically.
+        </p>
+
+        <!-- Project footer -->
+        <div class="project-footer">
+          <a href="https://github.com/theofficialtonytran/logistics-operations-dashboard" target="_blank" rel="noopener" class="github-btn" aria-label="View Logistics Operations project on GitHub">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ══════════════════════════════════════
-         PROJECT 3: COTA
+         PROJECT 4: COTA
     ══════════════════════════════════════ -->
     <div class="card project-card reveal" data-categories="optimization" id="cota">
       <div class="card-body">
         <div class="project-header">
           <div>
-            <div class="card-eyebrow">03 · Operations Research</div>
+            <div class="card-eyebrow">04 · Operations Research</div>
             <h2 class="card-title-lg">COTA Bus Stop Optimization</h2>
           </div>
           <span class="project-num-tag">optimization</span>
@@ -477,13 +560,13 @@
     </div>
 
     <!-- ══════════════════════════════════════
-         PROJECT 4: IGS Energy
+         PROJECT 5: IGS Energy
     ══════════════════════════════════════ -->
     <div class="card project-card reveal" data-categories="optimization" id="energy">
       <div class="card-body">
         <div class="project-header">
           <div>
-            <div class="card-eyebrow">04 · Energy Analytics</div>
+            <div class="card-eyebrow">05 · Energy Analytics</div>
             <h2 class="card-title-lg">IGS Energy - Battery Optimization</h2>
           </div>
           <span class="project-num-tag">optimization</span>
@@ -551,7 +634,7 @@
     </div>
 
     <!-- ══════════════════════════════════════
-         PROJECT 5: Stock Market
+         PROJECT 6: Stock Market
     ══════════════════════════════════════ -->
     <div class="card project-card reveal" data-categories="bayesian machine-learning" id="stock">
       <div class="card-body">
